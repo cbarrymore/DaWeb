@@ -21,6 +21,7 @@ import {
 } from "react-router-dom";
 
 import { AuthProvider } from './hooks/useAuth.jsx'
+import { LoginPage } from './Routes/Login.jsx'
 
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route index element={<Home />} />
       <Route path='about' element={<About />} />
       <Route path='contact' element={<Contacts />} />
+      <Route path='login' element={<LoginPage/>}/>
     </Route> 
   </AuthProvider>
   ))

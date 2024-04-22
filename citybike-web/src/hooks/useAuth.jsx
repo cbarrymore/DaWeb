@@ -1,5 +1,5 @@
 
-import {UserContext} from './../UserContext';
+import UserContext from './../UserContext';
 import { useNavigate } from "react-router-dom";
 import {useContext, useMemo } from "react";
 import { useLocalStorage } from './useLocalStorage';
@@ -9,8 +9,9 @@ export const AuthProvider = ({ children }) => {
   
     // call this function when you want to authenticate the user
     const login = async (data) => {
+      console.log(data);
       setUser(data);
-      navigate("/profile");
+      navigate("/");
     };
   
     // call this function to sign out logged in user
@@ -30,6 +31,6 @@ export const AuthProvider = ({ children }) => {
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
   };
   
-  export const useAuth = () => {
-    return useContext(UserContext);
-  };
+  export function useAuth() {
+  return useContext(UserContext);
+}

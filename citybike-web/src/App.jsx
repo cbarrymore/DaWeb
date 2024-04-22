@@ -10,29 +10,23 @@ import { Layout } from './Layout.jsx'
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  Form,
-  json,
-  Link,
-  Outlet,
   Route,
   RouterProvider,
-  useBlocker,
-  useLocation,
 } from "react-router-dom";
 
-import { AuthProvider } from './hooks/useAuth.jsx'
 import { LoginPage } from './Routes/Login.jsx'
+import { AuthLayout } from './AuthLayout.jsx'
 
 
 const router = createBrowserRouter(createRoutesFromElements(
-  <AuthProvider>
+  <Route element={<AuthLayout/>}>
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />} />
       <Route path='about' element={<About />} />
       <Route path='contact' element={<Contacts />} />
       <Route path='login' element={<LoginPage/>}/>
     </Route> 
-  </AuthProvider>
+  </Route>
   ))
 
 
@@ -49,8 +43,8 @@ function App() {
 
 
   return (
-    <RouterProvider router={router}/>
-  )
+      <RouterProvider router={router}>
+      </RouterProvider>  )
 }
 
 export default App

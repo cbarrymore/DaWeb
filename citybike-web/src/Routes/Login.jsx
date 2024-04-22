@@ -8,13 +8,15 @@ export const LoginPage = () => {
     e.preventDefault();
     // Here you would usually send a request to your backend to authenticate the user
     // For the sake of this example, we're using a mock authentication
+    console.log(username)
     if (username === "user" && password === "password") {
       // Replace with actual authentication logic
-      await login({ username });
+      await login(username);
     } else {
       alert("Invalid username or password");
     }
   };
+  console.log(username, password);
   return (
     <div>
       <form onSubmit={handleLogin}>

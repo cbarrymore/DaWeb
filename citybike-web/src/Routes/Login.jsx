@@ -1,19 +1,50 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import Gateway from "../configs/constants"
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const handleLogin = async (e) => {
     e.preventDefault();
-    // Here you would usually send a request to your backend to authenticate the user
-    // For the sake of this example, we're using a mock authentication
-    console.log(username)
-    if (username === "user" && password === "password") {
-      // Replace with actual authentication logic
-      await login(username);
-    } else {
-      alert("Invalid username or password");
+    const controller = new AbortController();
+    const signal = controller.signal;
+    
+    // Cancel the fetch request in 500ms
+    setTimeout(() => controller.abort(), 500);
+    
+
+    const path = Gateway + "/auth/login?" + "username=" + username + "&password=" + password;
+    
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow",
+      signal: AbortSignal.timeout(2000)
+    };
+    
+    try{
+      const response= await fetch(path, requestOptions)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json()
+      data.username = username
+      console.log(data)
+      login(data)
+    }
+    catch(err){
+      if (err.name === "TimeoutError") {
+        alert("Timeout: It took more than 2 seconds to get the result!");
+      } else if (err.name === "AbortError") {
+        alert(
+          "Fetch aborted by user action (browser stop button, closing tab, etc.",
+        );
+      } else if (err.name === "TypeError") {
+        alert("AbortSignal.timeout() method is not supported");
+      } else {
+        // A network error, or some other problem.
+        alert(`Error: type: ${err.name}, message: ${err.message}`);
+      }
     }
   };
   console.log(username, password);
@@ -27,6 +58,7 @@ export const LoginPage = () => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -36,6 +68,7 @@ export const LoginPage = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
         <button type="submit">Login</button>

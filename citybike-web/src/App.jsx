@@ -6,7 +6,7 @@ import {Home} from './Routes/Home.jsx'
 import { About } from './Routes/About.jsx'
 import { Contacts } from './Routes/Contacts.jsx'
 import { Layout } from './Layout.jsx'
-
+import {Estaciones} from './Routes/Estaciones.jsx'
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -23,6 +23,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />} />
       <Route path='about' element={<About />} />
+      <Route path='estaciones' element={<Estaciones/>} />
       <Route path='contact' element={<Contacts />} />
       <Route path='login' element={<LoginPage/>}/>
     </Route> 

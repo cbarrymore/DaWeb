@@ -16,12 +16,12 @@ const Navbar = () => {
           <Link to="/contact">Contact</Link>
         </li>
         <li>
-          <Link to="/login">Login</Link>
+          <Link to="/estaciones">Estaciones</Link>
         </li>
-        {user !== null  && (
-          <li>
-            <Link onClick={logout} to="/">Logout</Link>
-          </li>
+        {user !== null ? (
+          <li> <Link onClick={logout} to="/">Logout</Link></li>)
+          : (
+          <li> <Link to="/login">Login</Link></li>
         )}
       </ul>
     </nav>

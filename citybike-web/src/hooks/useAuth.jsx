@@ -5,24 +5,32 @@ import {useContext, useMemo } from "react";
 import { useLocalStorage } from './useLocalStorage';
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useLocalStorage("user", null);
+    const [token, setToken] = useLocalStorage("token", null);
+    const [role, setRole] = useLocalStorage("role", null);
     const navigate = useNavigate();
   
     // call this function when you want to authenticate the user
     const login = async (data) => {
       console.log(data);
-      setUser(data);
+      setToken(data.token);
+      setRole(data.role);
+      setUser(data.username);
       navigate("/");
     };
   
     // call this function to sign out logged in user
     const logout = () => {
       setUser(null);
+      setToken(null);
+      setRole(null);
       navigate("/", { replace: true });
     };
   
     const value = useMemo(
       () => ({
         user,
+        token,
+        role,
         login,
         logout,
       }),

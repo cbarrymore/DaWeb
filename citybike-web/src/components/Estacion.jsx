@@ -63,7 +63,7 @@ const Estacion = () => {
 
     
 
-    const fetchBicis = async (idEstacion, motivoBaja) => {
+    const fetchBicis = async (idEstacion) => {
         const uri = Gateway + `/estaciones/${idEstacion}/bicis?page=${currentPage}&size=${bicisPerPage}`;
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer "+token);
@@ -100,8 +100,8 @@ const Estacion = () => {
             
     }
 
-    const handleDarBajaBici = async (codigoBici) => {
-        const uri = Gateway +  `/estaciones/${idEstacion}/bicis/${codigoBici}`;
+    const handleDarBajaBici = async (codigoBici,motivoBaja) => {
+        const uri = Gateway +  `/estaciones/${idEstacion}/bicis/${codigoBici}?motivoBaja=${motivoBaja}`;
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer "+token);
         const requestOptions = {
@@ -114,6 +114,7 @@ const Estacion = () => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+            bicicletas.find(bici => bici.codigo === codigoBici).motivoBaja = motivoBaja
             fetchBicis(idEstacion)
         } catch(err){
             if (err.name === "AbortError") {
@@ -137,7 +138,7 @@ const Estacion = () => {
     <div>
         <h1>Estacion {estacion.nombre}</h1>
         <h2>Bicicletas</h2>
-        <ListaBicis bicis={bicicletas} />
+        <ListaBicis bicis={bicicletas} onBaja={handleDarBajaBici} />
         <Pagination elementsPerPage={bicisPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
         <button onClick={() => navigate("/estaciones")}>Volver</button>
     </div>

@@ -1,18 +1,10 @@
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import React, { useState } from 'react';
 import FormDialog from './FormDialog';
 
 const DarBajaFormDialog = ({ onBaja, biciCodigo}) => {
     const handleSubmit = (formJson) => {
         const motivoBaja  = formJson.motivoBaja;
         console.log(motivoBaja);
-        // onBaja(biciCodigo, motivoBaja);º
+        onBaja(biciCodigo, motivoBaja);
     }
   return (
     <FormDialog onSubmit={handleSubmit} buttonText="Dar de baja" dialogTitle="Dar de baja" dialogContentText="Ingrese el motivo de la baja" submitText="Dar de baja"

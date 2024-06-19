@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import Gateway from "../configs/constants"
+import { useLocation, useNavigate } from "react-router-dom";
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const handleLogin = async (e) => {
     e.preventDefault();
-    const controller = new AbortController();
-    const signal = controller.signal;
-    
+    const controller = new AbortController();    
     // Cancel the fetch request in 500ms
     setTimeout(() => controller.abort(), 500);
     
@@ -31,6 +33,7 @@ export const LoginPage = () => {
       data.username = username
       console.log(data)
       login(data)
+      navigate(from, { replace: true });
     }
     catch(err){
       if (err.name === "TimeoutError") {
@@ -47,7 +50,7 @@ export const LoginPage = () => {
       }
     }
   };
-  console.log(username, password);
+
   return (
     <div>
       <form onSubmit={handleLogin}>

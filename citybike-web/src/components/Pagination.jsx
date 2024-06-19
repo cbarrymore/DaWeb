@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Pagination = ({ stationsPerPage,totalPages ,handlePagination,currentPage}) => {
+const Pagination = ({ elementsPerPage,totalPages ,handlePagination,currentPage}) => {
   const paginationNumbers = [];
  
   for (let i = 1; i <= totalPages; i++) {
@@ -10,9 +8,9 @@ const Pagination = ({ stationsPerPage,totalPages ,handlePagination,currentPage})
   return (
         <div className='pagination'>
             {
-                paginationNumbers.map((data) => (
-                    <button key={data} onClick={() => handlePagination(data)} className={currentPage === data ? 'active' : ''}>
-                        {data}
+                paginationNumbers.map((number) => (
+                    <button key={number} onClick={() => handlePagination(number)} className={currentPage === number ? 'active' : ''}>
+                        {number}
                     </button>
                 ))
             }

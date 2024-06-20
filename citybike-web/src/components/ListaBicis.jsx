@@ -37,7 +37,6 @@ const ListaBicis = ({ bicis, onBaja, onDelete }) => {
             <td>
                 <DarBajaFormDialog onBaja={onBaja} biciCodigo={bici.codigo}/>
               {/* <button onClick={() => onBaja(bici.codigo)}>Dar de baja</button> */}
-              <button onClick={() => onDelete(bici.codigo)}>Eliminar</button>
             </td>
           </tr>
         ))}

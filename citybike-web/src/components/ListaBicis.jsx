@@ -6,10 +6,15 @@ const DarBajaFormDialog = ({ onBaja, biciCodigo}) => {
         console.log(motivoBaja);
         onBaja(biciCodigo, motivoBaja);
     }
-  return (
-    <FormDialog onSubmit={handleSubmit} buttonText="Dar de baja" dialogTitle="Dar de baja" dialogContentText="Ingrese el motivo de la baja" submitText="Dar de baja"
-      formFields={[  {id: "motivoBaja", name: "motivoBaja", label: "Motivo de baja", type: "text"}]} />
-  )
+  if(localStorage.getItem("role") === "gestor")
+    {
+      return (
+        <td>
+        <FormDialog onSubmit={handleSubmit} buttonText="Dar de baja" dialogTitle="Dar de baja" dialogContentText="Ingrese el motivo de la baja" submitText="Dar de baja"
+          formFields={[  {id: "motivoBaja", name: "motivoBaja", label: "Motivo de baja", type: "text"}]} />
+          </td>
+      )
+    }
 }
 
 const ListaBicis = ({ bicis, onBaja, onDelete }) => {
@@ -34,10 +39,8 @@ const ListaBicis = ({ bicis, onBaja, onDelete }) => {
             {bici.fechaBaja ? <td>{bici.fechaBaja}</td> : <td> - </td>}
             {bici.motivoBaja ? <td>{bici.motivoBaja}</td> : <td> - </td>}
             <td>{bici.disponible ? "Sí" : "No"}</td>
-            <td>
-                <DarBajaFormDialog onBaja={onBaja} biciCodigo={bici.codigo}/>
+              <DarBajaFormDialog onBaja={onBaja} biciCodigo={bici.codigo}/>
               {/* <button onClick={() => onBaja(bici.codigo)}>Dar de baja</button> */}
-            </td>
           </tr>
         ))}
       </tbody>

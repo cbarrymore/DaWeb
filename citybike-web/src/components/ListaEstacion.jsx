@@ -1,7 +1,20 @@
 import { Link, useNavigate } from "react-router-dom"
 
+const OpcionesRol = ({rol, estacion, onEdit, onDelete}) =>
+  {
+    if(rol === "gestor")
+      {
+        return (
+          <td>
+          <button onClick={() => onEdit(estacion)}>Editar</button>
+          <button onClick={() => onDelete(estacion.id)}>Eliminar</button>
+          </td>)
+      }
+  }
+
 const ListaEstacion = ({ estaciones, onEdit, onDelete }) => {
   const navigate = useNavigate()
+  const rol = localStorage.getItem("role")
   return (
     <table>
       <thead>
@@ -20,9 +33,8 @@ const ListaEstacion = ({ estaciones, onEdit, onDelete }) => {
             <td>{estacion.dirPostal}</td>
             <td>{estacion.bicisDisponibles}</td>
             <td>{estacion.fechaAlta}</td>
+            <OpcionesRol rol = {rol} estacion = {estacion} onEdit={onEdit} onDelete={onDelete}/>
             <td>
-              <button onClick={() => onEdit(estacion)}>Editar</button>
-              <button onClick={() => onDelete(estacion.id)}>Eliminar</button>
               <button
                 onClick={() =>
                   navigate(`/estaciones/${estacion.id}`, { replace: true })

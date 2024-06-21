@@ -63,8 +63,13 @@ const Estacion = () => {
 
     
 
-    const fetchBicis = async (idEstacion) => {
-        const uri = Gateway + `/estaciones/${idEstacion}/bicis?page=${currentPage}&size=${bicisPerPage}`;
+    const fetchBicis = async (idEstacion, motivoBaja) => {
+        let uri = Gateway + `/estaciones/${idEstacion}/bicis`;
+        if(localStorage.getItem("role") === "usuario")
+        {
+            uri += `/disponibles`
+        }
+        uri += `?page=${currentPage}&size=${bicisPerPage}`
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer "+token);
         const requestOptions = {
@@ -75,7 +80,7 @@ const Estacion = () => {
         try{
             const response = await fetch(uri, requestOptions);
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! status: ${response.status} ${uri}`);
             }
             const data = await response.json();
             console.log(data);
@@ -100,8 +105,8 @@ const Estacion = () => {
             
     }
 
-    const handleDarBajaBici = async (codigoBici,motivoBaja) => {
-        const uri = Gateway +  `/estaciones/${idEstacion}/bicis/${codigoBici}?motivoBaja=${motivoBaja}`;
+    const handleDarBajaBici = async (codigoBici) => {
+        const uri = Gateway +  `/estaciones/${idEstacion}/bicis/${codigoBici}`;
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer "+token);
         const requestOptions = {
@@ -114,7 +119,6 @@ const Estacion = () => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            bicicletas.find(bici => bici.codigo === codigoBici).motivoBaja = motivoBaja
             fetchBicis(idEstacion)
         } catch(err){
             if (err.name === "AbortError") {
@@ -138,7 +142,7 @@ const Estacion = () => {
     <div>
         <h1>Estacion {estacion.nombre}</h1>
         <h2>Bicicletas</h2>
-        <ListaBicis bicis={bicicletas} onBaja={handleDarBajaBici} />
+        <ListaBicis bicis={bicicletas} />
         <Pagination elementsPerPage={bicisPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
         <button onClick={() => navigate("/estaciones")}>Volver</button>
     </div>

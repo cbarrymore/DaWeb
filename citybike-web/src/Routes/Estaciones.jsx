@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../hooks/useAuth"
 import ListaEstacion from "../components/ListaEstacion";
-import FormularioEstacion from "../components/FormularioEstacion";
 import Gateway from "../configs/constants";
 import Pagination from "../components/Pagination";
 export const Estaciones = () => {
@@ -188,13 +187,8 @@ export const Estaciones = () => {
                 </div>
             </div>
             
-            <ListaEstacion estaciones={filteredStations} onEdit={setSelectedStation} onDelete={handleDelete} />
+            <ListaEstacion estaciones={filteredStations} onDelete={handleDelete} />
             <Pagination elementsPerPage={stationsPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
-            <FormularioEstacion
-                onSubmit={selectedStation ? handleUpdate : handleCreate}
-                initialData={selectedStation}
-                key={selectedStation ? selectedStation.id : undefined}
-            />
         </div>
     );
 

@@ -108,6 +108,7 @@ export async function loader({ params }) {
   }
 
 const FormularioEstacion = () => {
+  const objEstacion = useLoaderData();
     const navigate = useNavigate()
     const [form, setForm] = useState({
         nombre: '',
@@ -165,9 +166,9 @@ const FormularioEstacion = () => {
         <Form.Control required name="nombre" type="text" value={form.nombre} onChange={handleChange} placeholder="Nombre de estación" />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Label>Latitud</Form.Label>
-        <Form.Control name="numPuestos" type="number" step={0.0001}
-        placeholder="Numero Puestos" value={form.latitud} onChange={handleChange} />
+        <Form.Label>Numero Puestos</Form.Label>
+        <Form.Control name="numPuestos" type="number" step={1}
+        placeholder="Numero Puestos" value={form.numPuestos} onChange={handleChange} />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Código Postal</Form.Label>

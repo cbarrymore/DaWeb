@@ -108,8 +108,6 @@ export async function loader({ params }) {
   }
 
 const FormularioEstacion = () => {
-    const navigate = useNavigate(); // Utiliza el hook useNavigate
-    const objEstacion = useLoaderData();
     const navigate = useNavigate()
     const [form, setForm] = useState({
         nombre: '',

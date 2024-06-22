@@ -16,13 +16,14 @@ import RequireAuth from './utils/RequireAuth.jsx'
 import RedirectIfLogged from './utils/RedirectIfLogged.jsx'
 import Estacion, {loader as estacionLoader,} from './components/Estacion.jsx';
 import FormularioEstacion, {loader as formularioEstacionLoader,} from './components/FormularioEstacion.jsx';
+import { ReservaAlquila } from './Routes/ReservaAlquila.jsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route element={<AuthLayout/>}>
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />} />
-      <Route path='estaciones' element={<RequireAuth><Estaciones/></RequireAuth>}>
-      </Route>
+      <Route path='estaciones' element={<RequireAuth><Estaciones/></RequireAuth>}></Route>
+      <Route path='reservar_alquilar' element={<RequireAuth userroles={[ur.usuario,ur.gestor]}><ReservaAlquila/></RequireAuth>}></Route>
       <Route path='estaciones/:id' loader={estacionLoader} element={<RequireAuth><Estacion/></RequireAuth>}/>
       <Route path='estaciones/editar/:id' loader={formularioEstacionLoader} element={<RequireAuth><FormularioEstacion/></RequireAuth>}/>
       <Route path='estaciones/editar' element={<RequireAuth><FormularioEstacion/></RequireAuth>}/>

@@ -1,18 +1,23 @@
 import {Outlet } from "react-router-dom"
-import Navbar from "./components/Navbar"
+import Sidebar from "./components/Sidebar"
 import { DebugComponent } from "./components/ContextValues"
+import {Container, Stack } from "react-bootstrap"
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./Layout.css"
 export const Layout = () =>{
     return (
-    <>
-      <h1>Citybike</h1>
-      <Navbar />
-      <p>
-        {/* Current location (index): {location.pathname} ({historyIndex}) */}
-      </p>
-      <Outlet />
-      <aside>
-          <DebugComponent />
-      </aside>
-    </>
+    <Stack>
+      <div className="sidebar">
+        <h1  className="header">Citybike</h1>
+        <Sidebar />
+      </div>
+      <div className="content">
+        <Outlet />
+        <aside>
+            <DebugComponent />
+        </aside>
+      </div>
+    </Stack>
     )
 }

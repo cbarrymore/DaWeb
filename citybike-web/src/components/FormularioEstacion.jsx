@@ -2,6 +2,7 @@ import { useLoaderData, useNavigate } from "react-router-dom"
 import Gateway from "../configs/constants"
 import { useEffect, useState } from "react"
 import { useAuth } from "../hooks/useAuth";
+import { Button, Form } from "react-bootstrap";
 
 export async function loader({ params }) {
     const estacionRet = await fetchEstacion(params.id)
@@ -107,6 +108,7 @@ export async function loader({ params }) {
   }
 
 const FormularioEstacion = () => {
+    const navigate = useNavigate(); // Utiliza el hook useNavigate
     const objEstacion = useLoaderData();
     const navigate = useNavigate()
     const [form, setForm] = useState({
@@ -159,49 +161,36 @@ const FormularioEstacion = () => {
     };
 
     return (
-      <div>
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                name="nombre"
-                placeholder="Nombre"
-                value={form.nombre}
-                onChange={handleChange}
-            />
-            <input
-                type="number"
-                name="numPuestos"
-                placeholder="numPuestos"
-                value={form.numPuestos}
-                onChange={handleChange}
-            />
-            <input
-                type="number"
-                name="dirPostal"
-                placeholder="Código Postal"
-                value={form.dirPostal}
-                onChange={handleChange}
-            />
-            <input
-                type="number"
-                step="0.0001"
-                name="latitud"
-                placeholder="Latitud"
-                value={form.latitud}
-                onChange={handleChange}
-            />
-            <input
-                type="number"
-                step="0.0001"
-                name="longitud"
-                placeholder="Longitud"
-                value={form.longitud}
-                onChange={handleChange}
-            />
-            <button type="submit">Guardar</button>
-        </form>
-        <button onClick={() => navigate("/estaciones")}>Volver</button>
-        </div>
+      <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Nombre</Form.Label>
+        <Form.Control required name="nombre" type="text" value={form.nombre} onChange={handleChange} placeholder="Nombre de estación" />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Label>Latitud</Form.Label>
+        <Form.Control name="numPuestos" type="number" step={0.0001}
+        placeholder="Numero Puestos" value={form.latitud} onChange={handleChange} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Código Postal</Form.Label>
+        <Form.Control name="dirPostal" type="number" 
+        placeholder="Código postal" value={form.dirPostal} onChange={handleChange} />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Label>Latitud</Form.Label>
+        <Form.Control name="latitud" type="number" step={0.0001}
+        placeholder="Latitud" value={form.latitud} onChange={handleChange} />
+        <Form.Label>Longitud</Form.Label>
+        <Form.Control name="longitud" type="number" step={0.0001}
+        placeholder="Longitud" value={form.longitud} onChange={handleChange} />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+      <Button variant="secondary" onClick={() => navigate("/estaciones")}>
+          Atrás
+        </Button>
+    </Form>
     );
 };
 

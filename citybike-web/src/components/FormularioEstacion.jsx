@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import Gateway from "../configs/constants"
 import { useEffect, useState } from "react"
 import { useAuth } from "../hooks/useAuth";
@@ -108,7 +108,7 @@ export async function loader({ params }) {
 
 const FormularioEstacion = () => {
     const objEstacion = useLoaderData();
-    let crear;
+    const navigate = useNavigate()
     const [form, setForm] = useState({
         nombre: '',
         numPuestos: '',
@@ -118,19 +118,16 @@ const FormularioEstacion = () => {
     });
 
     useEffect(() => {
+      alert(JSON.stringify(objEstacion))
         if (objEstacion) {
             let estacion = {
                 nombre : objEstacion.nombre,
+                numPuestos : objEstacion.numPuestos,
                 dirPostal : objEstacion.dirPostal,
                 latitud : objEstacion.latitud,
                 longitud : objEstacion.longitud
             };
             setForm(estacion);
-            crear = false;
-        }
-        else
-        {
-            crear = true;
         }
     }, [objEstacion]);
 
@@ -144,13 +141,13 @@ const FormularioEstacion = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(crear)
+        if(objEstacion)
         {
-            crearEstacion(form)
+          modificarEstacion(form, objEstacion.id)
         }
         else
         {
-            modificarEstacion(form, objEstacion.id)
+          crearEstacion(form)
         }
         setForm({
             nombre: '',
@@ -162,12 +159,20 @@ const FormularioEstacion = () => {
     };
 
     return (
+      <div>
         <form onSubmit={handleSubmit}>
             <input
                 type="text"
                 name="nombre"
                 placeholder="Nombre"
                 value={form.nombre}
+                onChange={handleChange}
+            />
+            <input
+                type="number"
+                name="numPuestos"
+                placeholder="numPuestos"
+                value={form.numPuestos}
                 onChange={handleChange}
             />
             <input
@@ -195,6 +200,8 @@ const FormularioEstacion = () => {
             />
             <button type="submit">Guardar</button>
         </form>
+        <button onClick={() => navigate("/estaciones")}>Volver</button>
+        </div>
     );
 };
 

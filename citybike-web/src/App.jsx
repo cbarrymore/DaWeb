@@ -24,8 +24,8 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path='estaciones' element={<RequireAuth><Estaciones/></RequireAuth>}>
       </Route>
       <Route path='estaciones/:id' loader={estacionLoader} element={<RequireAuth><Estacion/></RequireAuth>}/>
-      <Route path='estaciones/editar/:id' loader={formularioEstacionLoader} element={<RequireAuth><FormularioEstacion/></RequireAuth>}/>
-      <Route path='estaciones/editar' element={<RequireAuth><FormularioEstacion/></RequireAuth>}/>
+      <Route path='estaciones/editar/:id' loader={formularioEstacionLoader} element={<RequireAuth userroles={[ur.gestor]}><FormularioEstacion/></RequireAuth>}/>
+      <Route path='estaciones/editar' element={<RequireAuth userroles={[ur.gestor]}><FormularioEstacion/></RequireAuth>}/>
       <Route path='login' element={<RedirectIfLogged><LoginPage/></RedirectIfLogged>}/>
     </Route> 
   </Route>

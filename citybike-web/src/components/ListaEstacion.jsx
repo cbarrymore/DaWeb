@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom"
-
+import { userRoles as ur } from "../data/userRoles"
 const OpcionesRol = ({rol, estacion, navigate, onDelete}) =>
   {
-    if(rol === "gestor")
+    if(rol === ur.gestor)
       {
         return (
           <td>
@@ -13,10 +13,21 @@ const OpcionesRol = ({rol, estacion, navigate, onDelete}) =>
       }
   }
 
+  const CrearEstacion = ({rol, navigate}) =>
+    {
+      if(rol === ur.gestor)
+        {
+          return (
+            <button onClick={() =>
+                    navigate(`/estaciones/editar`, { replace: true })}>Crear</button>)
+        }
+    }
+
 const ListaEstacion = ({ estaciones, onDelete }) => {
   const navigate = useNavigate()
   const rol = localStorage.getItem("role")
   return (
+    <div>
     <table>
       <thead>
         <tr>
@@ -49,6 +60,8 @@ const ListaEstacion = ({ estaciones, onDelete }) => {
         ))}
       </tbody>
     </table>
+    <CrearEstacion rol={rol} navigate={navigate} />
+    </div>
   )
 }
 const test = (id) => {

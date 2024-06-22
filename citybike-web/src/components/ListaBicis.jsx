@@ -1,18 +1,29 @@
 import FormDialog from './FormDialog';
+import { userRoles as ur } from "../data/userRoles"
+import { Button } from 'bootstrap';
 
-const DarBajaFormDialog = ({ onBaja, biciCodigo}) => {
+const OpcionesRol = ({ rol, onBaja, onReserva, onAlquiler, biciCodigo}) => {
     const handleSubmit = (formJson) => {
         const motivoBaja  = formJson.motivoBaja;
         console.log(motivoBaja);
         onBaja(biciCodigo, motivoBaja);
     }
-  if(localStorage.getItem("role") === "gestor")
+  if(rol === ur.gestor)
     {
       return (
         <td>
         <FormDialog onSubmit={handleSubmit} buttonText="Dar de baja" dialogTitle="Dar de baja" dialogContentText="Ingrese el motivo de la baja" submitText="Dar de baja"
           formFields={[  {id: "motivoBaja", name: "motivoBaja", label: "Motivo de baja", type: "text"}]} />
           </td>
+      )
+    }
+  if(rol === ur.usuario)
+    {
+      return (
+        <td>
+        <button onClick={onReserva}>Reservar</button>
+        <button onClick={onAlquiler}>Alquilar</button>
+        </td>
       )
     }
 }
@@ -39,7 +50,7 @@ const ListaBicis = ({ bicis, onBaja, onDelete }) => {
             {bici.fechaBaja ? <td>{bici.fechaBaja}</td> : <td> - </td>}
             {bici.motivoBaja ? <td>{bici.motivoBaja}</td> : <td> - </td>}
             <td>{bici.disponible ? "Sí" : "No"}</td>
-              <DarBajaFormDialog onBaja={onBaja} biciCodigo={bici.codigo}/>
+              <OpcionesRol rol={localStorage.getItem("role")} onBaja={onBaja} onReserva={null} onAlquiler={null} biciCodigo={bici.codigo}/>
               {/* <button onClick={() => onBaja(bici.codigo)}>Dar de baja</button> */}
           </tr>
         ))}

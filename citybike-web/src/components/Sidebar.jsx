@@ -23,6 +23,18 @@ const Sidebar = () => {
       <Nav.Link>
         <Link to="/estaciones" style={linkStyle}>Estaciones</Link>
       </Nav.Link>
+      
+      <Nav.Link>
+        {role !== null && role === ur.gestor ? (
+          <Link to="/reservas" style={linkStyle}>Reservas</Link>
+        ) : console.log(role)}
+      </Nav.Link>
+      <Nav.Link>
+        {role !== null && role === ur.gestor ? (
+          <Link to="/alquileres" style={linkStyle}>Alquileres</Link>
+        ) : console.log(role)}
+      </Nav.Link>
+      
       <Nav.Link>
         {user !== null ? (
           <Link onClick={logout} to="/">
@@ -31,11 +43,6 @@ const Sidebar = () => {
         ) : (
           <Link to="/login" style={linkStyle}>Login</Link>
         )}
-      </Nav.Link>
-      <Nav.Link>
-        {role !== null && role === ur.gestor ? (
-          <Link to="/reservar_alquilar" style={linkStyle}>Reservar/Alquilar</Link>
-        ) : console.log(role)}
       </Nav.Link>
     </Container>
 

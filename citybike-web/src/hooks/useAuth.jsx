@@ -1,5 +1,5 @@
 
-import UserContext from './../UserContext';
+import AuthContext from '../contexts/AuthContext';
 import { useNavigate } from "react-router-dom";
 import {useContext, useMemo } from "react";
 import { useLocalStorage } from './useLocalStorage';
@@ -40,9 +40,9 @@ export const AuthProvider = ({ children }) => {
       }),
       [user]
     );
-    return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
   };
   
   export function useAuth() {
-  return useContext(UserContext);
+  return useContext(AuthContext);
 }

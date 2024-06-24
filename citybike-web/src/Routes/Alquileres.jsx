@@ -3,7 +3,39 @@ import Gateway from "../configs/constants"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { Button, Col, Container, Modal, Row, Table } from "react-bootstrap"
 import buttonStyle from "../utils/ComponentsStyles"
+import TablaEstaciones from "../components/TablaEstaciones"
+import { fetchEstaciones } from "../apis/AccessEstaciones"
+import { EstacionesPaginada } from "../components/EstacionesPaginadas"
+import { useNavigate } from "react-router-dom"
 
+
+
+const DialogEstacionesDejarBicicleta = ({show, handleClose}) => {
+  // const [estaciones, setEstaciones] = useState([])
+  
+  // useEffect(() => {
+  //   const data = fetchEstaciones()
+  //   setEstaciones(data)
+  // }, [])
+  return (
+    <Modal show={show} onHide={handleClose} animation={false} centered size="lg">
+      <Modal.Header closeButton>
+        <Modal.Title>Estaciones</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <EstacionesPaginada  filters={false}/>
+      </Modal.Body>
+      <Modal.Footer className="justify-content-center">
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleClose}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  )
+}
 
 export const Alquileres = () => {
   const [userInfo, setUserInfo] = useLocalStorage("userInfo", null)
@@ -12,14 +44,14 @@ export const Alquileres = () => {
   const [historialAlquileres, setHistorialAlquileres] = useState([])
   const [alquilerActivo, setAlquilerActivo] = useState(null)
   const [show, setShow] = useState(false);
+  const [estaciones, setEstaciones] = useState([])
+  const navigate = useNavigate()
 
   const handleClose = () => setShow(false);
 
-  useEffect(() => {
-    if (userInfo === null) {
-      fetchUserInfo(idUser)
-    }
-  }, [userInfo])
+  useEffect(() => {  
+    fetchUserInfo(idUser)
+  }, [idUser,token])
 
   const fetchUserInfo = async (idUser) => {
     const uri = Gateway + `/alquileres/usuarios/${idUser}`
@@ -58,7 +90,7 @@ export const Alquileres = () => {
     }
   }
 
-  const handleDevolverBicicleta = async () => {
+  const handleDevolverBicicleta = async (idEstacion) => {
     const uri = Gateway + `/alquileres/usuarios/${idUser}`
     const myHeaders = new Headers()
     myHeaders.append("Authorization", "Bearer " + token)
@@ -106,17 +138,28 @@ export const Alquileres = () => {
           </Col>
         </Row>
       ) : (
-        <p>No hay alquileres activos</p>
+        <>
+          <Row>
+            <p>No hay alquileres activos</p>
+          </Row>
+          <Row>
+            <Button  style={buttonStyle} onClick={() => navigate("/estaciones")}>Alquilar bicicletas</Button>
+          </Row>
+        </>
       )}
       <h2>Historial de alquileres</h2>
-      <TablaAlquileres alquileres={historialAlquileres} />
+      {historialAlquileres.length ===0 ? (
+        <p>No hay historial de alquileres</p>
+      ) : (
+        <TablaAlquileres alquileres={historialAlquileres} />
+      )}
 
-      <Modal show={show} onHide={handleClose} animation={false} centered size="lg"       >
+      <Modal show={show} onHide={handleClose} animation={false} centered size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Estaciones </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <TablaAlquileres alquileres={historialAlquileres} />
+          <EstacionesPaginada  filters={false}/>
         </Modal.Body>
         <Modal.Footer className="justify-content-center">
           <Button variant="secondary" onClick={handleClose}>

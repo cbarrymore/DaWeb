@@ -25,12 +25,12 @@ const Sidebar = () => {
       </Nav.Link>
       
       <Nav.Link>
-        {role !== null && role === ur.gestor ? (
+        {role !== null && role === ur.usuario ? (
           <Link to="/reservas" style={linkStyle}>Reservas</Link>
         ) : console.log(role)}
       </Nav.Link>
       <Nav.Link>
-        {role !== null && role === ur.gestor ? (
+        {role !== null && role === ur.usuario ? (
           <Link to="/alquileres" style={linkStyle}>Alquileres</Link>
         ) : console.log(role)}
       </Nav.Link>

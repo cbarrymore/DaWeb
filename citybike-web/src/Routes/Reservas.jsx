@@ -4,13 +4,14 @@ import { useEffect, useState } from "react"
 import Gateway from "../configs/constants"
 import Swal from "sweetalert2"
 import buttonStyle from "../utils/ComponentsStyles"
+import { useNavigate } from "react-router-dom"
 
 export const Reservas = () => {
   const [userInfo, setUserInfo] = useLocalStorage("userInfo", null)
   const token = localStorage.getItem("token")
   const idUser = localStorage.getItem("id")
   const [reservas, setReservas] = useState([])
-
+  const navigate = useNavigate()
   useEffect(() => {
     if (userInfo === null) {
       fetchUserInfo(idUser)
@@ -138,7 +139,7 @@ export const Reservas = () => {
             <p>No hay reservas</p>
           </Row>
           <Row>
-            <Button href="/estaciones" style={buttonStyle}>Reservar bicicleta</Button>
+            <Button onClick={() => navigate("/estaciones")} style={buttonStyle}>Reservar bicicleta</Button>
           </Row>
         </Container>
       ) : (

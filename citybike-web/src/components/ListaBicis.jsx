@@ -29,16 +29,6 @@ const OpcionesRol = ({ rol, onBaja, onReserva, onAlquiler, biciCodigo}) => {
     }
 }
 
-const CrearBici = ({rol, navigate}) =>
-  {
-    if(rol === ur.gestor)
-      {
-        return (
-          <Button onClick={() =>
-                  navigate(`/estaciones/editar`, { replace: true })}>+</Button>)
-      }
-  }
-
 const ListaBicis = ({ bicis, onBaja, idEstacion }) => {
   return (
     <Container>

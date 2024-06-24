@@ -142,7 +142,7 @@ const Estacion = () => {
     <div>
         <h1>Estacion {estacion.nombre}</h1>
         <h2>Bicicletas</h2>
-        <ListaBicis bicis={bicicletas} />
+        <ListaBicis bicis={bicicletas} onBaja={handleDarBajaBici} idEstacion={idEstacion} />
         <Pagination elementsPerPage={bicisPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
         <button onClick={() => navigate("/estaciones")}>Volver</button>
     </div>

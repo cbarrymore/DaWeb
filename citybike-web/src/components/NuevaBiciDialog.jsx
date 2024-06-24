@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
+
 const CrearBici = async (idEstacion, modelo) => {
     const token = localStorage.getItem("token")
     const uri = Gateway + `/estaciones/${idEstacion}/bicis`
@@ -39,11 +40,20 @@ const CrearBici = async (idEstacion, modelo) => {
 
 function NuevaBiciDialog(idEstacion) {
   const [show, setShow] = useState(false);
-  const [modelo, setModelo] = useState("");
+  const [form, setForm] = useState({
+    modelo: ''
+});
+const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({
+        ...form,
+        [name]: value
+    });
+};
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleSubmit = () => {
-    CrearBici(estacion, modelo)
+    CrearBici(idEstacion.idEstacion, form.modelo)
   }
   return (
     <>
@@ -57,12 +67,13 @@ function NuevaBiciDialog(idEstacion) {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3">
               <Form.Label>Modelo</Form.Label>
               <Form.Control
-                type="email"
-                value={modelo} 
-                onChange={setModelo}
+                name='modelo'
+                type="text"
+                value={form.modelo} 
+                onChange={handleChange}
                 placeholder="Rally, Montaña..."
                 autoFocus
                 required

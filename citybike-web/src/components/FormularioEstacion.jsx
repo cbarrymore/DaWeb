@@ -157,6 +157,7 @@ const FormularioEstacion = () => {
             latitud: '',
             longitud: ''
         });
+        navigate(`/estaciones`)
     };
 
     return (

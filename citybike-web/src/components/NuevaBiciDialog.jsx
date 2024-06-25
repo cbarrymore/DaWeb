@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import {  useNavigate } from "react-router-dom"
+
 import Gateway from '../configs/constants';
 import { darAltaBici } from '../apis/AccessEstaciones';
 import Swal from 'sweetalert2';
@@ -26,6 +28,7 @@ const CrearBici = async (idEstacion, modelo) => {
   }
 
 function NuevaBiciDialog(idEstacion) {
+  const navigate = useNavigate()
   const [show, setShow] = useState(false);
   const [form, setForm] = useState({
     modelo: ''
@@ -39,8 +42,15 @@ const handleChange = (e) => {
 };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleSubmit = () => {
-    CrearBici(idEstacion.idEstacion, form.modelo)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    CrearBici(idEstacion.idEstacion, form.modelo);
+    setForm({
+      modelo: '',
+    });
+    setShow(false);
+    navigate()
+    `/estaciones/${idEstacion.idEstacion}`
   }
   return (
     <>

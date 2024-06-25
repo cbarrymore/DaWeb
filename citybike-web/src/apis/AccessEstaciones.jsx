@@ -32,3 +32,20 @@ export const fetchEstaciones = async (page, stationsPerPage) => {
     }
 
 }
+
+export const darAltaBici = async (idEstacion, modelo) => {
+    const token = localStorage.getItem("token")
+    const uri = Gateway + `/estaciones/${idEstacion}/bicis/?modelo=${modelo}`
+    const myHeaders = new Headers()
+    myHeaders.append("Authorization", "Bearer " + token)
+    myHeaders.append('Content-Type', 'x-www-form-urlencoded;charset=UTF-8')
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body : modelo,
+      redirect: "follow",
+    }
+    fetch(uri, requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+}

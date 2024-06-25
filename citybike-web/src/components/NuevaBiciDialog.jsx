@@ -2,40 +2,27 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+import Gateway from '../configs/constants';
+import { darAltaBici } from '../apis/AccessEstaciones';
+import Swal from 'sweetalert2';
 
 const CrearBici = async (idEstacion, modelo) => {
-    const token = localStorage.getItem("token")
-    const uri = Gateway + `/estaciones/${idEstacion}/bicis`
-    const formBody = `modelo=${modelo}`
-    const myHeaders = new Headers()
-    myHeaders.append("Authorization", "Bearer " + token)
-    myHeaders.append('Content-Type', 'x-www-form-urlencoded;charset=UTF-8')
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body : modelo,
-      redirect: "follow",
-    
-    }
-    try {
-      const response = await fetch(uri, requestOptions)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-    } catch (err) {
-      if (err.name === "AbortError") {
-        alert(
-          "Fetch aborted by user action (browser stop button, closing tab, etc."
-        )
-      } else if (err.name === "TypeError") {
-        alert("AbortSignal.timeout() method is not supported")
-      } else {
-        // A network error, or some other problem.
-        alert(`Error: type: ${err.name}, message: ${err.message}`)
-      }
-    }
-    return {}
+    darAltaBici(idEstacion, modelo).then((response) => {
+        Swal.fire({
+            title: 'Bici añadida!',
+            text: 'La bici se añadió correctamente',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+        });
+    })
+    .catch((error) => {
+        Swal.fire({
+            title: 'Error!',
+            text: `No se pudo añadir la bici. ${error}`,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        });
+    })
   }
 
 function NuevaBiciDialog(idEstacion) {

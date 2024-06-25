@@ -1,4 +1,4 @@
-class Bici {
+class BiciModel {
     constructor(codigo,modelo,fechaAlta,fechaBaja,motivo,disponible) {
         this.codigo = codigo;
         this.modelo = modelo;
@@ -9,4 +9,4 @@ class Bici {
     }
 }
 
-export default Bici;
+export default BiciModel;

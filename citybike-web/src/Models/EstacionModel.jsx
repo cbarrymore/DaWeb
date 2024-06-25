@@ -1,5 +1,5 @@
 
-class Estacion {
+class EstacionModel {
     constructor(nombre, direccion, capacidad) {
         this.nombre = nombre;
         this.direccion = direccion;
@@ -27,4 +27,4 @@ class Estacion {
     }
 }
 
-export default Estacion;
+export default EstacionModel;

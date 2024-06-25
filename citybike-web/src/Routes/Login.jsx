@@ -11,20 +11,8 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const {reserva,setReserva,alquiler,setAlquiler } = useContext(UserContext)
+  const {reservas,setReservas,alquiler,setAlquiler , updateUserContext} = useContext(UserContext)
   
-  const updateuserContext = () => {
-    fetchUserInfo().then((data) => {
-      console.log(data)
-      let alquilerActivo = data.alquileres.find((alquiler) => alquiler.fin === null || alquiler.fin === "")
-      console.log(alquilerActivo)
-      if (alquilerActivo) setAlquiler(alquilerActivo)
-      if (data.reserva.length > 0)
-        setReserva(data.reserva);
-      console.log(reserva)
-      console.log(alquiler)
-    });
-  } 
   
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -50,7 +38,7 @@ export const LoginPage = () => {
       data.username = username
       console.log(data)
       login(data)
-      updateuserContext()
+      updateUserContext()
       navigate(from, { replace: true });
     }
     catch(err){

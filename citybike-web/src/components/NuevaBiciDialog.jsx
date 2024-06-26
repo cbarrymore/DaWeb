@@ -49,8 +49,8 @@ const handleChange = (e) => {
       modelo: '',
     });
     setShow(false);
-    navigate()
-    `/estaciones/${idEstacion.idEstacion}`
+    navigate(`/estaciones/${idEstacion.idEstacion}`)
+    
   }
   return (
     <>

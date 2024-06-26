@@ -33,6 +33,31 @@ export const fetchEstaciones = async (page, stationsPerPage) => {
 
 }
 
+
+export const fetchBicicletas = async (idEstacion, page, bicisPerPage) => {
+    let uri = Gateway + `/estaciones/${idEstacion}/bicis`;
+    const token = localStorage.getItem("token");
+    if(localStorage.getItem("role") === "usuario")
+    {
+        uri += `/disponibles`
+    }
+    uri += `?page=${page}&size=${bicisPerPage}`
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer "+token);
+    const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+    };
+    const response = await fetch(uri, requestOptions)
+    if(!response.ok){
+      const errorMessage = await response.text()
+      throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
+    }
+    const data = await response.json()
+    return data
+}
+
 export const darAltaBici = async (idEstacion, modelo) => {
     const token = localStorage.getItem("token")
     const uri = Gateway + `/estaciones/${idEstacion}/bicis/?modelo=${modelo}`

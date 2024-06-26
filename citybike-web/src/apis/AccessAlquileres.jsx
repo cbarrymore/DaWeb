@@ -17,6 +17,9 @@ export const crearReserva = async (idBici) => {
       const errorMessage = await response.text()
       throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
     }
+    if (response.status === 204) {
+      return
+    }
   const data = await response.json()
   return data
 }
@@ -33,9 +36,16 @@ export const confirmarReserva = async () => {
     headers: myHeaders,
     redirect: "follow"
   };
-  fetch(uri, requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
+  const response = await fetch(uri, requestOptions)
+    if(!response.ok){
+      const errorMessage = await response.text()
+      throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
+    }
+  if (response.status === 204) {
+    return
+  }
+  const data = await response.json()
+  return data
 }
 
 export const cancelarReserva = async (idReserva) => {
@@ -95,6 +105,9 @@ export const dejarBicicleta = async (idEstacion) => {
     const response = await fetch(uri, requestOptions)
     if(!response.ok){
       throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    if (response.status === 204) {
+      return
     }
     const data = await response.json()
     return data

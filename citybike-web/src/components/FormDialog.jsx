@@ -1,24 +1,59 @@
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import React from 'react';
-import { Modal } from 'react-bootstrap';
-import { Form } from 'react-router-dom';
+import {  useNavigate } from "react-router-dom"
+import { Modal, Button, Form } from 'react-bootstrap';
+import { useState } from 'react';
+import Swal from 'sweetalert2';
+import Gateway from '../configs/constants';
+import { darBajaBici } from '../apis/AccessEstaciones';
 
-const FormDialog = ({onSubmit,buttonText,dialogTitle,dialogContentText,submitText,formFields}) => {
-    const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+const BorrarBici = (idEstacion, idBici, motivoBaja) => {
+  darBajaBici(idEstacion, idBici, motivoBaja).then((response) => {
+      Swal.fire({
+          title: 'Bici dada de baja!',
+          text: 'La bici se ha dado de baja correctamente',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+      });
+  })
+  .catch((error) => {
+      Swal.fire({
+          title: 'Error!',
+          text: `No se pudo añadir la bici. ${error}`,
+          icon: 'error',
+          confirmButtonText: 'Ok'
+      });
+  })
+}
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+const FormDialog = ({idEstacion, idBici}) => {
+  const navigate = useNavigate()
+  const [show, setShow] = useState(false);
+  const [form, setForm] = useState({
+    modelo: ''
+});
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({
+        ...form,
+        [name]: value
+    })};
+
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      BorrarBici(idEstacion, idBici, form.motivoBaja)
+      setForm({
+        motivoBaja: '',
+      });
+      setShow(false);
+      navigate(`/estaciones/${idEstacion}`)
+      
+    }
   /*
 open={open}
         onClose={handleClose}
@@ -34,42 +69,42 @@ open={open}
           },
         }}*/
 
-  return (
-    <>
-      <Button onClick={handleClickOpen}>
-        {buttonText}
-      </Button>
-      <Modal>
-        <Modal.Header closeButton>
-        <Modal.Title>{}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            {dialogContentText}
-          </p>
-          <Form>
-          {formFields.map((field) => (
-            <Form.Group className="mb-3">
-              <Form.Label>{field.label}</Form.Label>
-            <Form.Control
-                name={field.name}
-                type={field.type}
-                value={field} 
-                margin="dense"
-                onChange={handleChange}
-                autoFocus
-                required
-              />
-            </Form.Group>
-          ))}
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">{submitText}</Button>
-          </Form>
-        </Modal.Body>
+          return (
+            <>
+              <Button variant="primary" onClick={handleShow}>
+                -
+              </Button>
         
-      </Modal>
-      </>
-  );
+              <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                  <Modal.Title>Nueva Bici</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Motivo de la baja</Form.Label>
+                      <Form.Control
+                        name='motivoBaja'
+                        type="text"
+                        value={form.motivoBaja} 
+                        onChange={handleChange}
+                        placeholder="Motivo de la baja"
+                        autoFocus
+                        required
+                      />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Eliminar
+                    </Button>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                  </Form>
+                </Modal.Body>
+                
+              </Modal>
+            </>
+          );
 }
 
 export default FormDialog;

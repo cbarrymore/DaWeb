@@ -2,23 +2,17 @@ import FormDialog from './FormDialog';
 import { userRoles as ur } from "../data/userRoles";
 import { Alert, Button, Col, Container, Row, Table } from "react-bootstrap";
 import NuevaBiciDialog from './NuevaBiciDialog';
-import { useContext } from 'react';
+import { useContext} from 'react';
 import UserContext from '../contexts/UserContext';
 
-const OpcionesRol = ({ rol, onBaja, onReserva, onAlquiler, biciCodigo}) => {
+const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
     const {alquiler, reservas} = useContext(UserContext);
 
-    const handleSubmit = (formJson) => {
-        const motivoBaja  = formJson.motivoBaja;
-        console.log(motivoBaja);
-        onBaja(biciCodigo, motivoBaja);
-    }
   if(rol === ur.gestor)
     {
       return (
         <td>
-        <FormDialog onSubmit={handleSubmit} buttonText="Dar de baja" dialogTitle="Dar de baja" dialogContentText="Ingrese el motivo de la baja" submitText="Dar de baja"
-          formFields={[  {id: "motivoBaja", name: "motivoBaja", label: "Motivo de baja", type: "text", valor: ""}]} />
+        <FormDialog idBici={biciCodigo} idEstacion={idEstacion}/>
           </td>
       )
     }
@@ -31,7 +25,7 @@ const OpcionesRol = ({ rol, onBaja, onReserva, onAlquiler, biciCodigo}) => {
           <Button disabled={reservas.length >0  || alquiler !== null} onClick={() => onReserva(biciCodigo)}>
             {"Reservar"}
           </Button>
-          <Button disabled={alquiler !== null} onClick={ () => onAlquiler(biciCodigo)}>
+          <Button disabled={reservas.length >0  || alquiler !== null} onClick={ () => onAlquiler(biciCodigo)}>
             {"Alquilar"}
           </Button>
         </td>
@@ -39,17 +33,18 @@ const OpcionesRol = ({ rol, onBaja, onReserva, onAlquiler, biciCodigo}) => {
     }
 }
 
-const CrearBici = ({rol, navigate}) =>
+const CrearBici = ({rol,idEstacion}) =>
   {
     if(rol === ur.gestor)
       {
         return (
-          <Button onClick={() =>
-                  navigate(`/estaciones/editar`, { replace: true })}>+</Button>)
+          <NuevaBiciDialog idEstacion={idEstacion} />
+        )
+
       }
   }
 
-const ListaBicis = ({ bicis, onBaja,onReserva,onAlquiler, idEstacion }) => {
+const ListaBicis = ({ bicis,onReserva,onAlquiler, idEstacion }) => {
   console.log(idEstacion)
   const {alquiler, reservas} = useContext(UserContext);
 
@@ -77,7 +72,7 @@ const ListaBicis = ({ bicis, onBaja,onReserva,onAlquiler, idEstacion }) => {
                   {bici.fechaBaja ? <td>{bici.fechaBaja}</td> : <td> - </td>}
                   {bici.motivoBaja ? <td>{bici.motivoBaja}</td> : <td> - </td>}
                   <td>{bici.disponible ? "Sí" : "No"}</td>
-                    <OpcionesRol rol={localStorage.getItem("role")} onBaja={onBaja} onReserva={onReserva} onAlquiler={onAlquiler} biciCodigo={bici.codigo}/>
+                    <OpcionesRol rol={localStorage.getItem("role")} onReserva={onReserva} onAlquiler={onAlquiler} biciCodigo={bici.codigo} idEstacion={idEstacion}/>
                     {/* <button onClick={() => onBaja(bici.codigo)}>Dar de baja</button> */}
                 </tr>
               ))}
@@ -85,7 +80,7 @@ const ListaBicis = ({ bicis, onBaja,onReserva,onAlquiler, idEstacion }) => {
           </Table>
         </Col>
         <Col md="auto">
-              <NuevaBiciDialog idEstacion={idEstacion} />
+        <CrearBici rol={localStorage.getItem("role")} idEstacion={idEstacion}/>
         </Col>
       </Row>
     </Container>

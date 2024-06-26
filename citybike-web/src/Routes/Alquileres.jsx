@@ -142,9 +142,6 @@ export const Alquileres = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
         </Modal.Footer>
       </Modal>
     </Container>
@@ -159,7 +156,7 @@ const TablaAlquileres = ({ alquileres }) => {
           <th>Id</th>
           <th>Fecha creación</th>
           <th>Bicicleta</th>
-          <th>Caducidad</th>
+          <th>Fecha de fin</th>
         </tr>
       </thead>
       <tbody>

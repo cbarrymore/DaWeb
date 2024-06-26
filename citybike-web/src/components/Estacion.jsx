@@ -207,7 +207,7 @@ const Estacion = () => {
             </>
         )}
         
-        <ListaBicis bicis={bicicletas} onBaja={handleDarBajaBici} onAlquiler={handleAlquilarBici} onReserva={handleReservarBici} idEstacion={idEstacion} />
+        <ListaBicis bicis={bicicletas} onAlquiler={handleAlquilarBici} onReserva={handleReservarBici} idEstacion={idEstacion} />
         <Pagination elementsPerPage={bicisPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
         <Button onClick={() => navigate("/estaciones")}>Volver</Button>
         

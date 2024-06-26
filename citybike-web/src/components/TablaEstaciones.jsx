@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { Table, Button, Container, Row, Col } from "react-bootstrap";
 import { userRoles as ur } from "../data/userRoles"
+import FormularioEstacion from "./FormularioEstacion";
 
 function numColumnas(rol)
 {
@@ -29,7 +30,8 @@ const OpcionesRol = ({rol, estacion, navigate, onDelete}) =>
         {
           return (
             <Button onClick={() =>
-                    navigate(`/estaciones/editar`, { replace: true })}>+</Button>)
+              navigate(`/estaciones/editar`, { replace: true })}>+</Button>)
+  
         }
     }
 

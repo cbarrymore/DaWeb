@@ -74,3 +74,32 @@ export const darAltaBici = async (idEstacion, modelo) => {
   .then((response) => response.text())
   .then((result) => console.log(result))
 }
+
+    export const darBajaBici = async (idEstacion, codigoBici, motivo) => {
+    const uri = Gateway +  `/estaciones/${idEstacion}/bicis/${codigoBici}?motivoBaja=${motivo}`;
+    const myHeaders = new Headers();
+    const token = localStorage.getItem("token")
+    myHeaders.append("Authorization", "Bearer "+token);
+    const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        redirect: "follow"
+    };
+    try{
+        const response = await fetch(uri, requestOptions);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    } catch(err){
+        if (err.name === "AbortError") {
+            alert(
+                "Fetch aborted by user action (browser stop button, closing tab, etc.",
+            );
+        } else if (err.name === "TypeError") {
+            alert("AbortSignal.timeout() method is not supported");
+        } else {
+            // A network error, or some other problem.
+            alert(`Error: type: ${err.name}, message: ${err.message}`);
+        }
+    }
+  }

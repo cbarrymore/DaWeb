@@ -27,7 +27,7 @@ const CrearBici = async (idEstacion, modelo) => {
     })
   }
 
-function NuevaBiciDialog(idEstacion) {
+function NuevaBiciDialog({idEstacion}) {
   const navigate = useNavigate()
   const [show, setShow] = useState(false);
   const [form, setForm] = useState({
@@ -44,12 +44,12 @@ const handleChange = (e) => {
   const handleShow = () => setShow(true);
   const handleSubmit = (e) => {
     e.preventDefault();
-    CrearBici(idEstacion.idEstacion, form.modelo);
+    CrearBici(idEstacion, form.modelo);
     setForm({
       modelo: '',
     });
     setShow(false);
-    navigate(`/estaciones/${idEstacion.idEstacion}`)
+    navigate(`/estaciones/${idEstacion}`)
     
   }
   return (

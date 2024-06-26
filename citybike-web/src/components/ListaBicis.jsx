@@ -1,9 +1,13 @@
 import FormDialog from './FormDialog';
 import { userRoles as ur } from "../data/userRoles";
-import { Col, Container, Row, Table } from "react-bootstrap";
+import { Alert, Button, Col, Container, Row, Table } from "react-bootstrap";
 import NuevaBiciDialog from './NuevaBiciDialog';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 
 const OpcionesRol = ({ rol, onBaja, onReserva, onAlquiler, biciCodigo}) => {
+    const {alquiler, reservas} = useContext(UserContext);
+
     const handleSubmit = (formJson) => {
         const motivoBaja  = formJson.motivoBaja;
         console.log(motivoBaja);
@@ -20,16 +24,35 @@ const OpcionesRol = ({ rol, onBaja, onReserva, onAlquiler, biciCodigo}) => {
     }
   if(rol === ur.usuario)
     {
+      console.log(alquiler)
+      console.log(reservas)
       return (
         <td>
-        <button onClick={onReserva}>Reservar</button>
-        <button onClick={onAlquiler}>Alquilar</button>
+          <Button disabled={reservas.length >0  || alquiler !== null} onClick={() => onReserva(biciCodigo)}>
+            {"Reservar"}
+          </Button>
+          <Button disabled={alquiler !== null} onClick={ () => onAlquiler(biciCodigo)}>
+            {"Alquilar"}
+          </Button>
         </td>
-      )
+      );
     }
 }
 
-const ListaBicis = ({ bicis, onBaja, idEstacion }) => {
+const CrearBici = ({rol, navigate}) =>
+  {
+    if(rol === ur.gestor)
+      {
+        return (
+          <Button onClick={() =>
+                  navigate(`/estaciones/editar`, { replace: true })}>+</Button>)
+      }
+  }
+
+const ListaBicis = ({ bicis, onBaja,onReserva,onAlquiler, idEstacion }) => {
+  console.log(idEstacion)
+  const {alquiler, reservas} = useContext(UserContext);
+
   return (
     <Container>
       <Row>
@@ -47,14 +70,14 @@ const ListaBicis = ({ bicis, onBaja, idEstacion }) => {
             </thead>
             <tbody>
               {bicis.map((bici) => (
-                <tr key={bici.codigo}>
+                  <tr key={bici.codigo}>
                   <td>{bici.codigo}</td>
                   <td>{bici.modelo}</td>
                   <td>{bici.fechaAlta}</td>
                   {bici.fechaBaja ? <td>{bici.fechaBaja}</td> : <td> - </td>}
                   {bici.motivoBaja ? <td>{bici.motivoBaja}</td> : <td> - </td>}
                   <td>{bici.disponible ? "Sí" : "No"}</td>
-                    <OpcionesRol rol={localStorage.getItem("role")} onBaja={onBaja} onReserva={null} onAlquiler={null} biciCodigo={bici.codigo}/>
+                    <OpcionesRol rol={localStorage.getItem("role")} onBaja={onBaja} onReserva={onReserva} onAlquiler={onAlquiler} biciCodigo={bici.codigo}/>
                     {/* <button onClick={() => onBaja(bici.codigo)}>Dar de baja</button> */}
                 </tr>
               ))}

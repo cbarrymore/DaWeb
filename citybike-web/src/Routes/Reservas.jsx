@@ -1,93 +1,45 @@
 import { Button, Container, Row, Table } from "react-bootstrap"
 import { useLocalStorage } from "../hooks/useLocalStorage"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Gateway from "../configs/constants"
 import Swal from "sweetalert2"
 import buttonStyle from "../utils/ComponentsStyles"
 import { useNavigate } from "react-router-dom"
+import UserContext from "../contexts/UserContext"
+import { confirmarReserva, fetchUserInfo } from "../apis/AccessAlquileres"
 
 export const Reservas = () => {
   const [userInfo, setUserInfo] = useLocalStorage("userInfo", null)
   const token = localStorage.getItem("token")
   const idUser = localStorage.getItem("id")
-  const [reservas, setReservas] = useState([])
+  const {reservas,setReservas,alquiler,setAlquiler,updateUserContext} = useContext(UserContext)
+  const [update, setUpdate] = useState(false)
+
   const navigate = useNavigate()
   useEffect(() => {
-    if (userInfo === null) {
-      fetchUserInfo(idUser)
-    }
-  }, [userInfo])
+    updateUserContext()
+  },[update])
 
-  const fetchUserInfo = async (idUser) => {
-    const uri = Gateway + `/alquileres/usuarios/${idUser}`
-    const myHeaders = new Headers()
-    myHeaders.append("Authorization", "Bearer " + token)
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    }
-    try {
-      const response = await fetch(uri, requestOptions)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      setUserInfo(data)
-      setReservas(data.reservas)
-      return data
-    } catch (err) {
-      if (err.name === "AbortError") {
-        alert(
-          "Fetch aborted by user action (browser stop button, closing tab, etc."
-        )
-      } else if (err.name === "TypeError") {
-        alert("AbortSignal.timeout() method is not supported")
-      } else {
-        // A network error, or some other problem.
-        alert(`Error: type: ${err.name}, message: ${err.message}`)
-      }
-    }
-  }
+  
 
   const handleConfirmarReserva = async (idReserva) => {
-    const uri = Gateway + `/alquileres/usuarios/${idUser}/reservas`
-    const myHeaders = new Headers()
-    myHeaders.append("Authorization", "Bearer " + token)
-
-    const requestOptions = {
-      method: "PATCH",
-      headers: myHeaders,
-      redirect: "follow",
-    }
-    try {
-      const response = await fetch(uri, requestOptions)
-      if (!response.ok) {
-        if (response.status === 500) {
-          const errorMessage = await response.text()
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: errorMessage,
-          })
-        }
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      setUserInfo(data)
-      return data
-    } catch (err) {
-      if (err.name === "AbortError") {
-        alert(
-          "Fetch aborted by user action (browser stop button, closing tab, etc."
-        )
-      } else if (err.name === "TypeError") {
-        alert("AbortSignal.timeout() method is not supported")
-      } else {
-        // A network error, or some other problem.
-        alert(`Error: type: ${err.name}, message: ${err.message}`)
-      }
-    }
+    confirmarReserva().then(() => {
+      fetchUserInfo().then((data) => {
+        setUserInfo(data)
+        setReservas(data.reservas)
+        let alquilerActivo = data.alquileres.find((alquiler) => alquiler.fin === null || alquiler.fin === "")[0]
+        if (alquilerActivo) setAlquiler(alquilerActivo)
+          setUpdate(!update)
+      })
+    })
+    .catch((error) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error al confirmar la reserva" + error,
+      })
+    })
+    
   }
 
   const handleCancelarReserva = async (idReserva) => {
@@ -164,9 +116,6 @@ export const Reservas = () => {
                   {/* Added buttons for confirming and canceling reservation */}
                   <Button onClick={() => handleConfirmarReserva(reserva.id)} style={buttonStyle}>
                     Confirmar
-                  </Button>
-                  <Button onClick={() => cancelReservation(reserva.id)} style={buttonStyle}>
-                    Cancelar
                   </Button>
                 </td>
               </tr>

@@ -9,7 +9,7 @@ export const Estaciones = () => {
 
     return (
         <div>
-            <EstacionesPaginada filters={false}/>
+            <EstacionesPaginada filters={true}/>
         </div>
     );
 

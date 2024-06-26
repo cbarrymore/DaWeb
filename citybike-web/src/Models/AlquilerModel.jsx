@@ -1,4 +1,4 @@
-class Alquiler {
+class AlquilerModel {
     constructor(id, fechaInicio, fechaFin, idBici) {
         this.id = id;
         this.inicio = fechaInicio;
@@ -9,4 +9,4 @@ class Alquiler {
     // Add any additional methods or properties here
 }
 
-export default Alquiler;
+export default AlquilerModel;

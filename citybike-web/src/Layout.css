@@ -1,6 +1,55 @@
 @import "configs/palette.css";
 
-.sidebar {
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  /* @import "configs/palette.css";
+
+
+
+
+#sidebar {
     height: 100%;
     width: 250px;
     position: absolute;
@@ -8,29 +57,15 @@
     top: 0;
     left: 0;
     background-color: var(--charcoal);
-    overflow-x: hidden;
+    overflow-x: auto;
     padding-top: 20px;
     text-align: center;
-}
+    
+} 
 
 .header {
     color: white;
     padding: 10px;
     text-align: center;
 
-}
-
-
-#main-content {
-    height: 100%;
-    width: 100%;
-    background-color: var(--light-grey);
-    overflow-x: hidden;
-    grid-template-rows: 1fr 1fr 1fr;
-    text-align: center;
-    grid-template-rows: 7% 93%;
-}
-
-#main-content .banner {
-    color: red;
-}
+} */

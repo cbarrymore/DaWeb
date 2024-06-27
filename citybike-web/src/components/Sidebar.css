@@ -1,0 +1,33 @@
+@import "../configs/palette.css";
+
+
+.mynav {
+  color: #fff;
+}
+
+.mynav .nav-item .nav-link {
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+  padding: 8px 5px;
+  font-weight: light;
+  font-size: 1.5rem;
+}
+
+.mynav .nav-item .nav-link.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav .nav-item .nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mynav .nav-item .nav-link i {
+  width: 25px;
+  text-align: center;
+}
+.bg-success {
+  background-color: var(--charcoal) !important;
+}

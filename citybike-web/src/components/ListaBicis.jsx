@@ -18,7 +18,7 @@ const OpcionesRol = ({ rol, onBaja, onReserva, onAlquiler, biciCodigo}) => {
       return (
         <td>
         <FormDialog onSubmit={handleSubmit} buttonText="Dar de baja" dialogTitle="Dar de baja" dialogContentText="Ingrese el motivo de la baja" submitText="Dar de baja"
-          formFields={[  {id: "motivoBaja", name: "motivoBaja", label: "Motivo de baja", type: "text"}]} />
+          formFields={[  {id: "motivoBaja", name: "motivoBaja", label: "Motivo de baja", type: "text", valor: ""}]} />
           </td>
       )
     }

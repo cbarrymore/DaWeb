@@ -1,5 +1,6 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import "./Home.css"
 
 export const Home = () => {
   return (

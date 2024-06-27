@@ -33,53 +33,92 @@ const Sidebar = () => {
       <Offcanvas.Header closeButton>
         <Offcanvas.Title className="navbar-brand"></Offcanvas.Title>
       </Offcanvas.Header>
-      <div id="logo" className="d-flex justify-content-center" onClick={() => navigate("/")}>
+      <div
+        id="logo"
+        className="d-flex justify-content-center"
+        onClick={() => navigate("/")}
+      >
         <span
           className="navbar-brand"
-          style={{ fontSize: "2.5rem", color: "white", fontWeight: "bold", cursor: "pointer"}}
+          style={{
+            fontSize: "2.5rem",
+            color: "white",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
         >
-        <i className="fa-solid fa-bicycle"></i> 
+          <i className="fa-solid fa-bicycle"></i>
         </span>
       </div>
       <hr />
       <Nav className="flex-column mb-auto mynav" variant="pills">
         <Nav.Item className="mb-1" id="navitem">
-          <Nav.Link className="text-white" onClick={() => navigate("/estaciones")}>
+          <Nav.Link
+            className="text-white"
+            onClick={() => navigate("/estaciones")}
+          >
             <i className="fa-solid fa-square-parking"></i>
-              Estaciones
+            Estaciones
           </Nav.Link>
         </Nav.Item>
         {role !== null && role === ur.usuario && (
           <Nav.Item className="mb-1">
-            <Nav.Link className="text-white" onClick={() => navigate("/reservas")}>
-                Reservas
+            <Nav.Link
+              className="text-white"
+              onClick={() => navigate("/reservas")}
+            >
+              <i className="fa-solid fa-clock"></i>
+              Reservas
             </Nav.Link>
           </Nav.Item>
         )}
 
         {role !== null && role === ur.usuario ? (
           <Nav.Item className="mb-1">
-            <Nav.Link className="text-white" onClick={() => navigate("/alquileres")}>
-                Alquileres
+            <Nav.Link
+              className="text-white"
+              onClick={() => navigate("/alquileres")}
+            >
+              <i className="fa-solid fa-clipboard-list"></i>
+              Alquileres
             </Nav.Link>
           </Nav.Item>
         ) : (
           console.log(role)
         )}
         <Nav.Item className="mb-1">
-            {user !== null ? (
-              <Nav.Link className="text-white" onClick={() => {logout(); navigate("/")}}>
-                <i className="fas fa-sign-out-alt pe-2"></i>
-                  Logout
-              </Nav.Link>
-            ) : (
-              <Nav.Link className="text-white" onClick={() => {navigate("/login")}}>
-                <i className="fa-solid fa-right-to-bracket"></i>
-                  Login
-              </Nav.Link>
-            )}
+          {user !== null ? (
+            <Nav.Link
+              className="text-white"
+              onClick={() => {
+                logout()
+                navigate("/")
+              }}
+            >
+              <i className="fas fa-sign-out-alt pe-2"></i>
+              Logout
+            </Nav.Link>
+          ) : (
+            <Nav.Link
+              className="text-white"
+              onClick={() => {
+                navigate("/login")
+              }}
+            >
+              <i className="fa-solid fa-right-to-bracket"></i>
+              Login
+            </Nav.Link>
+          )}
         </Nav.Item>
       </Nav>
+      
+      <div className="d-flex justify-content-center">
+        <span>
+          <h6 className="mt-1 mb-0">Usuario: {user}</h6>
+          <h6 className="mt-1 mb-0">Rol: {role}</h6>
+        </span>
+      </div>
+
       <hr />
       <div className="d-flex justify-content-center">
         <span>

@@ -7,6 +7,7 @@ import FiltrosEstaciones from "./FIltrosEstaciones";
 import { fetchEstaciones, deleteEstacion } from "../apis/AccessEstaciones";
 import Swal from "sweetalert2"
 import EstacionModel from "../Models/EstacionModel";
+import { Col, Container, Row } from "react-bootstrap";
 
 export const EstacionesPaginada = ({filters}) => {
     const  {token} = useAuth();
@@ -143,14 +144,18 @@ export const EstacionesPaginada = ({filters}) => {
     }
 
     return (
-        <div>
+        <Container class="position-relative">
             {filters ? 
                 <FiltrosEstaciones setFilterMethods={[setFiltroNombre,setFiltroCodigoPostal,setFiltroNumBicicletas]} />
                 : null
             }
             <TablaEstaciones estaciones={filteredStations} onDelete={handleDelete} />
+            <Row>
+            <Col>
             <Pagination elementsPerPage={stationsPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
-        </div>
+            </Col>
+            </Row>
+        </Container>
     );
 
 }

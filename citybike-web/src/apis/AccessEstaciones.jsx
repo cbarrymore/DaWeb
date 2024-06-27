@@ -1,5 +1,24 @@
 import Gateway from "../configs/constants";
 
+export   const fetchEstacion = async (id) => {
+  const token = localStorage.getItem("token")
+  const uri = Gateway + `/estaciones/${id}`
+  const myHeaders = new Headers()
+  myHeaders.append("Authorization", "Bearer " + token)
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  }
+  const response = await fetch(uri, requestOptions);
+  if(!response.ok){
+      const errorMessage = await response.text()
+      throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
+    }
+    const data = await response.json()
+    return data
+}
+
 export const fetchEstaciones = async (page, stationsPerPage) => {
     const token = localStorage.getItem("token");
     const uri = Gateway + `/estaciones?page=${page}&size=${stationsPerPage}`;
@@ -100,3 +119,42 @@ export const darAltaBici = async (idEstacion, modelo) => {
       throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
     }
   }
+    export const crearEstacion = async (estacion) => {
+    const token = localStorage.getItem("token")
+    const uri = Gateway + `/estaciones`
+    const myHeaders = new Headers()
+    myHeaders.append("Authorization", "Bearer " + token)
+    myHeaders.append('Content-Type', 'application/json')
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body : JSON.stringify(estacion),
+      redirect: "follow",
+    
+    }
+    const response = await fetch(uri, requestOptions)
+    if(!response.ok){
+      const errorMessage = await response.text()
+      throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
+    }
+    }
+
+    export const modificarEstacion = async (estacion, id) => {
+      const token = localStorage.getItem("token")
+      const uri = Gateway + `/estaciones/${id}`
+      estacion.id = id;
+      const myHeaders = new Headers()
+      myHeaders.append("Authorization", "Bearer " + token)
+      myHeaders.append('Content-Type', 'application/json')
+      const requestOptions = {
+        method: "PUT",
+        headers: myHeaders,
+        body : JSON.stringify(estacion),
+        redirect: "follow",
+      }
+      const response = await fetch(uri, requestOptions)
+      if(!response.ok){
+        const errorMessage = await response.text()
+        throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
+      }
+    }

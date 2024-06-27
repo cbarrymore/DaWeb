@@ -4,6 +4,7 @@ import { Alert, Button, Col, Container, Row, Table } from "react-bootstrap";
 import NuevaBiciDialog from './NuevaBiciDialog';
 import { useContext} from 'react';
 import UserContext from '../contexts/UserContext';
+import buttonStyle from "../utils/ComponentsStyles"
 
 const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
     const {alquiler, reservas} = useContext(UserContext);
@@ -22,10 +23,10 @@ const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
       console.log(reservas)
       return (
         <td>
-          <Button disabled={reservas.length >0  || alquiler !== null} onClick={() => onReserva(biciCodigo)}>
+          <Button disabled={reservas.length >0  || alquiler !== null} style={buttonStyle} onClick={() => onReserva(biciCodigo)}>
             {"Reservar"}
           </Button>
-          <Button disabled={reservas.length >0  || alquiler !== null} onClick={ () => onAlquiler(biciCodigo)}>
+          <Button disabled={reservas.length >0  || alquiler !== null} style={buttonStyle} onClick={ () => onAlquiler(biciCodigo)}>
             {"Alquilar"}
           </Button>
         </td>

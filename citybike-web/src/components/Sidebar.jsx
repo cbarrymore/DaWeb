@@ -68,7 +68,7 @@ const Sidebar = () => {
         )}
         <Nav.Item className="mb-1">
             {user !== null ? (
-              <Nav.Link className="text-white" onClick={() => {logout(); navigate("/")}}>
+              <Nav.Link className="text-white" onClick={() => {logout(); navigate("/", {replace : true}); navigate(0);}}>
                 <i className="fas fa-sign-out-alt pe-2"></i>
                   Logout
               </Nav.Link>

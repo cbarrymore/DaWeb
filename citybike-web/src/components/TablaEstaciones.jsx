@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { Table, Button, Container, Row, Col } from "react-bootstrap";
 import { userRoles as ur } from "../data/userRoles"
+import buttonStyle from "../utils/ComponentsStyles"
 import FormularioEstacion from "./FormularioEstacion";
 
 function numColumnas(rol)
@@ -17,9 +18,9 @@ const OpcionesRol = ({rol, estacion, navigate, onDelete}) =>
       {
         return (
           <td>
-          <button onClick={() =>
-                  navigate(`/estaciones/editar/${estacion.id}`, { replace: true })}>Editar</button>
-          <button onClick={() => onDelete(estacion.id)}>Eliminar</button>
+          <Button style={buttonStyle} onClick={() =>
+                  navigate(`/estaciones/editar/${estacion.id}`, { replace: true })}>Editar</Button>
+          <Button style={buttonStyle} onClick={() => onDelete(estacion.id)}>Eliminar</Button>
           </td>)
       }
   }
@@ -29,7 +30,7 @@ const OpcionesRol = ({rol, estacion, navigate, onDelete}) =>
       if(rol === ur.gestor)
         {
           return (
-            <Button onClick={() =>
+            <Button  onClick={() =>
               navigate(`/estaciones/editar`, { replace: true })}>+</Button>)
   
         }
@@ -39,7 +40,6 @@ const TablaEstaciones = ({ estaciones, onDelete }) => {
   const navigate = useNavigate()
   const rol = localStorage.getItem("role")
   return (
-    <Container>
       <Row>
         <Col className="lg">
           <Table>
@@ -61,14 +61,14 @@ const TablaEstaciones = ({ estaciones, onDelete }) => {
                   <td>{estacion.fechaAlta}</td>
                   <OpcionesRol rol = {rol} estacion = {estacion} navigate={navigate} onDelete={onDelete}/>
                   <td>
-                    <button
-                      onClick={() =>
+                    <Button
+                      style={buttonStyle} onClick={() =>
                         navigate(`/estaciones/${estacion.id}`, { replace: true })
                       }
                     >
                       Ver
-                    </button>
-                    <button onClick={() => test(estacion.id)}> Test </button>
+                    </Button>
+                    <Button style={buttonStyle} onClick={() => test(estacion.id)}> Test </Button>
                   </td>
                 </tr>
               ))}
@@ -79,7 +79,6 @@ const TablaEstaciones = ({ estaciones, onDelete }) => {
           <CrearEstacion rol={rol} navigate={navigate} />
         </Col>
       </Row>
-    </Container>
   )
 }
 const test = (id) => {

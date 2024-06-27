@@ -19,6 +19,7 @@ import FormularioEstacion, {loader as formularioEstacionLoader,} from './compone
 import { Reservas } from './Routes/Reservas.jsx';
 import { Alquileres } from './Routes/Alquileres.jsx';
 import { UserLayout } from './layouts/UserLayout.jsx';
+import { Registrarse } from './Routes/Registrarse.jsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route element={<AuthLayout/>}>
@@ -32,6 +33,7 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path='estaciones/editar/:id' loader={formularioEstacionLoader} element={<RequireAuth userroles={[ur.gestor]}><FormularioEstacion/></RequireAuth>}/>
         <Route path='estaciones/editar' element={<RequireAuth userroles={[ur.gestor]}><FormularioEstacion/></RequireAuth>}/>
         <Route path='login' element={<RedirectIfLogged><LoginPage/></RedirectIfLogged>}/>
+        <Route path='registrarse' element={<Registrarse/>}/>
       </Route> 
     </Route>
   </Route>

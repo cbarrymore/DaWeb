@@ -117,6 +117,9 @@ export const Reservas = () => {
                   <Button onClick={() => handleConfirmarReserva(reserva.id)} style={buttonStyle}>
                     Confirmar
                   </Button>
+                  <Button onClick={() => handleCancelarReserva(reserva.id)} style={buttonStyle}>
+                    Cancelar
+                  </Button>
                 </td>
               </tr>
             ))}

@@ -4,6 +4,9 @@ import Gateway from "../configs/constants";
 import Pagination from "./Pagination";
 import TablaEstaciones from "./TablaEstaciones";
 import FiltrosEstaciones from "./FIltrosEstaciones";
+import { fetchEstaciones, deleteEstacion } from "../apis/AccessEstaciones";
+import Swal from "sweetalert2"
+import EstacionModel from "../Models/EstacionModel";
 
 export const EstacionesPaginada = ({filters}) => {
     const  {token} = useAuth();
@@ -19,7 +22,7 @@ export const EstacionesPaginada = ({filters}) => {
     const [filtroCodigoPostal, setFiltroCodigoPostal] = useState('');
     
     useEffect(() => {
-        fetchStations();
+        getEstaciones();
     }, [currentPage,stationsPerPage]);
     
     // useEffect(() => {
@@ -76,38 +79,31 @@ export const EstacionesPaginada = ({filters}) => {
                                     : filteredStations.filter(fe => fe.numBicicletas === filtroNumBicicletas);
         setFilteredStations(filteredStations);
     };
-    const fetchStations = async () => {
-        
-        const uri = Gateway + `/estaciones?page=${currentPage}&size=${stationsPerPage}`;
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer "+token);
-        const requestOptions = {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow"
-        };
-        console.log(uri);
-        try{
-            const response = await fetch(uri, requestOptions);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+    const getEstaciones =  () => {
+        fetchEstaciones(currentPage, stationsPerPage).then((data) => {
+            const estaciones = data._embedded.estacionDtoList
+            if (!estaciones) {
+                return
             }
-            const data = await response.json();
-            console.log(data);
-            setStations(data._embedded.estacionDtoList);
+            const estacionesModel = estaciones.map(estacion => {
+                return new EstacionModel(
+                    estacion.id,
+                    estacion.nombre,
+                    estacion.dirPostal,
+                    estacion.bicisDisponibles,
+                    estacion.fechaAlta
+                )
+            })
+            
+            setStations(estacionesModel);
             setTotalPages(data.page.totalPages);
-        }catch(err){
-            if (err.name === "AbortError") {
-                alert(
-                    "Fetch aborted by user action (browser stop button, closing tab, etc.",
-                );
-            } else if (err.name === "TypeError") {
-                alert("AbortSignal.timeout() method is not supported");
-            } else {
-                // A network error, or some other problem.
-                alert(`Error: type: ${err.name}, message: ${err.message}`);
-            }
-        }
+        }).catch((err) => Swal.fire({
+            title: "Error",
+            text: "No se ha podido obtener la lista de estaciones\n" + err.message,
+            icon: "error",
+            confirmButtonText: "Ok"
+        }))
+        
     };
 
     const handleCreate = async (station) => {
@@ -136,33 +132,8 @@ export const EstacionesPaginada = ({filters}) => {
         setStations(stations.map(station => station.id === updatedStation.id ? response.data : station));
     };
 
-    const handleDelete = async (id) => {
-        const uri = Gateway + `/estaciones/${id}`;
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer "+token);
-        const requestOptions = {
-            method: "DELETE",
-            headers: myHeaders,
-            redirect: "follow"
-        };
-        console.log(uri);
-        try{
-            const response = await fetch(uri, requestOptions);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-        }catch(err){
-            if (err.name === "AbortError") {
-                alert(
-                    "Fetch aborted by user action (browser stop button, closing tab, etc.",
-                );
-            } else if (err.name === "TypeError") {
-                alert("AbortSignal.timeout() method is not supported");
-            } else {
-                // A network error, or some other problem.
-                alert(`Error: type: ${err.name}, message: ${err.message}`);
-            }
-        }
+    const handleDelete = (id) => {
+        deleteEstacion(id)
         setStations(stations.filter(station => station.id !== id));
         handleFiltros();
     };

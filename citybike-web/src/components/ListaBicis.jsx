@@ -61,6 +61,7 @@ const ListaBicis = ({ bicis,onReserva,onAlquiler, idEstacion }) => {
                 <th>Fecha de Baja</th>
                 <th>Motivo de Baja</th>
                 <th>Disponible</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>

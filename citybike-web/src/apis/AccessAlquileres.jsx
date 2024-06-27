@@ -48,11 +48,11 @@ export const confirmarReserva = async () => {
   return data
 }
 
-export const cancelarReserva = async (idReserva) => {
+export const cancelarReserva = async () => {
   const token = localStorage.getItem("token")
   const idUser = localStorage.getItem("id")
 
-  const uri = Gateway + `/alquileres/usuarios/${idUser}/reservas/${idReserva}`
+  const uri = Gateway + `/alquileres/usuarios/${idUser}/reservas`
   const myHeaders = new Headers()
   myHeaders.append("Authorization", "Bearer " + token)
   const requestOptions = {

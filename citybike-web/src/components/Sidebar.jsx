@@ -7,6 +7,7 @@ import { userRoles as ur } from "../data/userRoles.jsx"
 import "../configs/palette.css"
 import "./Sidebar.css"
 import { useState } from "react"
+import { height } from "@mui/system"
 
 const Sidebar = () => {
   const { user, logout, role } = useAuth()
@@ -26,8 +27,8 @@ const Sidebar = () => {
       show={show}
       onHide={handleClose}
       backdrop={false}
-      className="d-flex flex-column flex-shrink-0 p-4 bg-success text-white h-100"
-      style={{ width: "250px" }}
+      className="d-flex flex-column flex-shrink-0 p-4 bg-success text-white"
+      style={{ width: "250px"}}
       responsive="md"
     >
       <Offcanvas.Header closeButton>

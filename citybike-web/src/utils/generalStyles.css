@@ -2,13 +2,13 @@
 
 .formulario{
     
-    border-radius: 2em;
-    width: 30vw;
+    border-radius: 2em !important;
+    width: 30vw !important;
     
 }
 
 .botonGrande{
-    width: 20vw;
+    width: 20vw !important;
 }
 
 .boton{
@@ -39,9 +39,9 @@
 
 @media (max-width: 1000px){
     .formulario{
-        width: 300px;
+        width: 300px !important;
     }
     .botonGrande{
-        width: 100px;
+        width: 100px !important;
     }
 }

@@ -10,8 +10,7 @@ import Swal from "sweetalert2";
 import { Button, Container } from "react-bootstrap";
 import { fetchBicicletas } from "../apis/AccessEstaciones";
 import BiciModel from "../Models/BiciModel";
-import {appCard, buttonStyle} from "../utils/ComponentsStyles";
-import {buttonStyle} from "../utils/ComponentsStyles";
+import { appCard } from "../utils/ComponentsStyles";
 import LoadingModal from "./LoadingModal";
 
 export async function loader({ params }) {

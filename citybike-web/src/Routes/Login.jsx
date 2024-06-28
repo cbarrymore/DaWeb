@@ -5,10 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import { fetchUserInfo } from "../apis/AccessAlquileres";
 import { Button, Container, Form, Spinner } from "react-bootstrap";
-import "../utils/formStyles.css"
 import Swal from "sweetalert2";
 import LoadingModal from "../components/LoadingModal";
-import { Button, Container, Form } from "react-bootstrap";
 import { appCard } from "../utils/ComponentsStyles";
 import "../utils/generalStyles.css";
 

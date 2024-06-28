@@ -94,6 +94,7 @@ const Sidebar = () => {
               onClick={() => {
                 logout()
                 navigate("/")
+                navigate(0);
               }}
             >
               <i className="fas fa-sign-out-alt pe-2"></i>

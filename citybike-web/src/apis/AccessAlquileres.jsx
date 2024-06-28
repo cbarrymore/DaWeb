@@ -37,22 +37,22 @@ export const confirmarReserva = async () => {
     redirect: "follow"
   };
   const response = await fetch(uri, requestOptions)
-    if(!response.ok){
-      const errorMessage = await response.text()
-      throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
-    }
   if (response.status === 204) {
     return
+  }
+  if(!response.ok){
+    const errorMessage = await response.text()
+    throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
   }
   const data = await response.json()
   return data
 }
 
-export const cancelarReserva = async (idReserva) => {
+export const cancelarReserva = async () => {
   const token = localStorage.getItem("token")
   const idUser = localStorage.getItem("id")
 
-  const uri = Gateway + `/alquileres/usuarios/${idUser}/reservas/${idReserva}`
+  const uri = Gateway + `/alquileres/usuarios/${idUser}/reservas`
   const myHeaders = new Headers()
   myHeaders.append("Authorization", "Bearer " + token)
   const requestOptions = {
@@ -82,6 +82,9 @@ export const alquilarBicicleta = async (idBici) => {
     if(!response.ok){
       const errorMessage = await response.text()
       throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
+    }
+    if (response.status === 204) {
+      return
     }
   const data = await response.json()
   return data

@@ -3,108 +3,11 @@ import Gateway from "../configs/constants"
 import { useEffect, useState } from "react"
 import { useAuth } from "../hooks/useAuth";
 import { Button, Form } from "react-bootstrap";
+import { crearEstacion, fetchEstacion, modificarEstacion } from "../apis/AccessEstaciones";
 
 export async function loader({ params }) {
     const estacionRet = await fetchEstacion(params.id)
     return  estacionRet 
-  }
-
-  const crearEstacion = async (estacion) => {
-    const token = localStorage.getItem("token")
-    const uri = Gateway + `/estaciones`
-    const myHeaders = new Headers()
-    myHeaders.append("Authorization", "Bearer " + token)
-    myHeaders.append('Content-Type', 'application/json')
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body : JSON.stringify(estacion),
-      redirect: "follow",
-    
-    }
-    try {
-      const response = await fetch(uri, requestOptions)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-    } catch (err) {
-      if (err.name === "AbortError") {
-        alert(
-          "Fetch aborted by user action (browser stop button, closing tab, etc."
-        )
-      } else if (err.name === "TypeError") {
-        alert("AbortSignal.timeout() method is not supported")
-      } else {
-        // A network error, or some other problem.
-        alert(`Error: type: ${err.name}, message: ${err.message}`)
-      }
-    }
-    return {}
-  }
-
-  const modificarEstacion = async (estacion, id) => {
-    const token = localStorage.getItem("token")
-    const uri = Gateway + `/estaciones/${id}`
-    estacion.id = id;
-    const myHeaders = new Headers()
-    myHeaders.append("Authorization", "Bearer " + token)
-    myHeaders.append('Content-Type', 'application/json')
-    const requestOptions = {
-      method: "PUT",
-      headers: myHeaders,
-      body : JSON.stringify(estacion),
-      redirect: "follow",
-    }
-    try {
-      const response = await fetch(uri, requestOptions)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-    } catch (err) {
-      if (err.name === "AbortError") {
-        alert(
-          "Fetch aborted by user action (browser stop button, closing tab, etc."
-        )
-      } else if (err.name === "TypeError") {
-        alert("AbortSignal.timeout() method is not supported")
-      } else {
-        // A network error, or some other problem.
-        alert(`Error: type: ${err.name}, message: ${err.message}`)
-      }
-    }
-    return {}
-  }
-
-  const fetchEstacion = async (id) => {
-    const token = localStorage.getItem("token")
-    const uri = Gateway + `/estaciones/${id}`
-    const myHeaders = new Headers()
-    myHeaders.append("Authorization", "Bearer " + token)
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    }
-    try {
-      const response = await fetch(uri, requestOptions)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const estacion = await response.json()
-      return estacion
-    } catch (err) {
-      if (err.name === "AbortError") {
-        alert(
-          "Fetch aborted by user action (browser stop button, closing tab, etc."
-        )
-      } else if (err.name === "TypeError") {
-        alert("AbortSignal.timeout() method is not supported")
-      } else {
-        // A network error, or some other problem.
-        alert(`Error: type: ${err.name}, message: ${err.message}`)
-      }
-    }
-    return {}
   }
 
 const FormularioEstacion = () => {

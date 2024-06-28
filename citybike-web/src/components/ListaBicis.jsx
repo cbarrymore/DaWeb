@@ -4,7 +4,7 @@ import { Alert, Button, Col, Container, Row, Table } from "react-bootstrap";
 import NuevaBiciDialog from './NuevaBiciDialog';
 import { useContext} from 'react';
 import UserContext from '../contexts/UserContext';
-import buttonStyle from "../utils/ComponentsStyles"
+import {buttonStyle, elementTable, headingTable} from "../utils/ComponentsStyles"
 
 const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
     const {alquiler, reservas} = useContext(UserContext);
@@ -12,9 +12,9 @@ const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
   if(rol === ur.gestor)
     {
       return (
-        <td>
+        <td style={elementTable}>
         <FormDialog idBici={biciCodigo} idEstacion={idEstacion}/>
-          </td>
+        </td>
       )
     }
   if(rol === ur.usuario)
@@ -22,11 +22,11 @@ const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
       console.log(alquiler)
       console.log(reservas)
       return (
-        <td>
-          <Button disabled={reservas.length >0  || alquiler !== null} style={buttonStyle} onClick={() => onReserva(biciCodigo)}>
+        <td style={elementTable}>
+          <Button className='mx-1' disabled={reservas.length >0  || alquiler !== null} style={buttonStyle} onClick={() => onReserva(biciCodigo)}>
             {"Reservar"}
           </Button>
-          <Button disabled={reservas.length >0  || alquiler !== null} style={buttonStyle} onClick={ () => onAlquiler(biciCodigo)}>
+          <Button className='mx-1' disabled={reservas.length >0  || alquiler !== null} style={buttonStyle} onClick={ () => onAlquiler(biciCodigo)}>
             {"Alquilar"}
           </Button>
         </td>
@@ -56,24 +56,24 @@ const ListaBicis = ({ bicis,onReserva,onAlquiler, idEstacion }) => {
           <Table>
             <thead>
               <tr>
-                <th>Codigo</th>
-                <th>Modelo</th>
-                <th>Fecha de Alta</th>
-                <th>Fecha de Baja</th>
-                <th>Motivo de Baja</th>
-                <th>Disponible</th>
-                <th></th>
+                <th style={headingTable}>Codigo</th>
+                <th style={headingTable}>Modelo</th>
+                <th style={headingTable}>Fecha de Alta</th>
+                <th style={headingTable}>Fecha de Baja</th>
+                <th style={headingTable}>Motivo de Baja</th>
+                <th style={headingTable}>Disponible</th>
+                <th style={headingTable}></th>
               </tr>
             </thead>
             <tbody>
               {bicis.map((bici) => (
                   <tr key={bici.codigo}>
-                  <td>{bici.codigo}</td>
-                  <td>{bici.modelo}</td>
-                  <td>{bici.fechaAlta}</td>
-                  {bici.fechaBaja ? <td>{bici.fechaBaja}</td> : <td> - </td>}
-                  {bici.motivoBaja ? <td>{bici.motivoBaja}</td> : <td> - </td>}
-                  <td>{bici.disponible ? "Sí" : "No"}</td>
+                  <td style={elementTable} className="align-middle">{bici.codigo}</td>
+                  <td style={elementTable} className="align-middle">{bici.modelo}</td>
+                  <td style={elementTable} className="align-middle">{bici.fechaAlta}</td>
+                  {bici.fechaBaja ? <td style={elementTable} className="align-middle">{bici.fechaBaja}</td> : <td style={elementTable} className="align-middle"> - </td>}
+                  {bici.motivoBaja ? <td style={elementTable} className="align-middle">{bici.motivoBaja}</td> : <td style={elementTable} className="align-middle"> - </td>}
+                  <td style={elementTable} className="align-middle">{bici.disponible ? "Sí" : "No"}</td>
                     <OpcionesRol rol={localStorage.getItem("role")} onReserva={onReserva} onAlquiler={onAlquiler} biciCodigo={bici.codigo} idEstacion={idEstacion}/>
                     {/* <button onClick={() => onBaja(bici.codigo)}>Dar de baja</button> */}
                 </tr>

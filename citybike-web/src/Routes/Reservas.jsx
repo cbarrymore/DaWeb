@@ -3,7 +3,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage"
 import { useContext, useEffect, useState } from "react"
 import Gateway from "../configs/constants"
 import Swal from "sweetalert2"
-import buttonStyle from "../utils/ComponentsStyles"
+import {buttonStyle, buttonNegativeStyle} from "../utils/ComponentsStyles"
 import { useNavigate } from "react-router-dom"
 import UserContext from "../contexts/UserContext"
 import { cancelarReserva, confirmarReserva, fetchUserInfo } from "../apis/AccessAlquileres"
@@ -98,10 +98,10 @@ export const Reservas = () => {
                 <td>{reserva.caducidad}</td>
                 <td>
                   {/* Added buttons for confirming and canceling reservation */}
-                  <Button onClick={() => handleConfirmarReserva()} style={buttonStyle}>
+                  <Button className="mx-1" onClick={() => handleConfirmarReserva()} style={buttonStyle}>
                     Confirmar
                   </Button>
-                  <Button onClick={() => handleCancelarReserva()} style={buttonStyle}>
+                  <Button className="mx-1" onClick={() => handleCancelarReserva()} style={buttonNegativeStyle}>
                     Cancelar
                   </Button>
                 </td>

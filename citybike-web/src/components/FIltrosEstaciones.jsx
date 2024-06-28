@@ -1,12 +1,13 @@
 import { Col, Row } from "react-bootstrap"
+import { filterHead } from "../utils/ComponentsStyles"
 
 const FiltrosEstaciones = ({setFilterMethods}) => {
     //alignItems: 'center', en la primera
     return (
         <>
         <h1>Estaciones</h1>
-        <Row style={{ padding : '2%'}}>
-            <Col style={{  marginRight: '20px'}}>
+        <Row style={filterHead} className="my-3 py-3">
+            <Col className = "p-2" style={{  marginRight: '20px'}}>
                 <h2>Filtrar por Nombre</h2>
                 <input type="text" placeholder="Nombre de la estación" onChange={(e) => setFilterMethods[0](e.target.value)}/>
             </Col>

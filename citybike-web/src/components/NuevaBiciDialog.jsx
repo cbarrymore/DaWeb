@@ -7,6 +7,7 @@ import {  useNavigate } from "react-router-dom"
 import Gateway from '../configs/constants';
 import { darAltaBici } from '../apis/AccessEstaciones';
 import Swal from 'sweetalert2';
+import { buttonNegativeStyle, buttonStyle, dialogBodyStyle, dialogHeadStyle } from '../utils/ComponentsStyles';
 
 const CrearBici = async (idEstacion, modelo) => {
     darAltaBici(idEstacion, modelo).then((response) => {
@@ -54,15 +55,15 @@ const handleChange = (e) => {
   }
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button style={buttonStyle} variant="primary" onClick={handleShow}>
         +
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
+        <Modal.Header style={dialogHeadStyle} closeButton>
           <Modal.Title>Nueva Bici</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={dialogBodyStyle}>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Modelo</Form.Label>
@@ -76,11 +77,11 @@ const handleChange = (e) => {
                 required
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button style={buttonStyle} className='mx-1' variant="primary" type="submit">
                 Añadir
             </Button>
-            <Button variant="secondary" onClick={handleClose}>
-                Close
+            <Button style={buttonNegativeStyle} className='mx-1' variant="secondary" onClick={handleClose}>
+                Cancelar
             </Button>
           </Form>
         </Modal.Body>

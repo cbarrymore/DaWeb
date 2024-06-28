@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { Button, Container } from "react-bootstrap";
 import { fetchBicicletas } from "../apis/AccessEstaciones";
 import BiciModel from "../Models/BiciModel";
+import {buttonStyle} from "../utils/ComponentsStyles";
 
 import LoadingModal from "./LoadingModal";
 
@@ -217,7 +218,7 @@ const Estacion = () => {
         
         <ListaBicis bicis={bicicletas} onAlquiler={handleAlquilarBici} onReserva={handleReservarBici} idEstacion={idEstacion} />
         <Pagination elementsPerPage={bicisPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
-        <Button onClick={() => navigate("/estaciones")}>Volver</Button>
+        <Button style={buttonStyle} onClick={() => navigate("/estaciones")}>Volver</Button>
         <LoadingModal show={loading} />
     </Container>
     )

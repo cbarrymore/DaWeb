@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom"
 import { Table, Button, Container, Row, Col } from "react-bootstrap";
 import { userRoles as ur } from "../data/userRoles"
-import buttonStyle from "../utils/ComponentsStyles"
 import FormularioEstacion from "./FormularioEstacion";
+import { buttonStyle, elementTable, headingTable } from "../utils/ComponentsStyles";
 
 function numColumnas(rol)
 {
@@ -18,9 +18,9 @@ const OpcionesRol = ({rol, estacion, navigate, onDelete}) =>
       {
         return (
           <>
-          <Button  style={buttonStyle} onClick={() =>
+          <Button className="mx-1" style={buttonStyle} onClick={() =>
                   navigate(`/estaciones/editar/${estacion.id}`, { replace: true })}>Editar</Button>
-          <Button className="mx-2" style={buttonStyle} onClick={() => onDelete(estacion.id)}>Eliminar</Button>
+          <Button className="mx-1" style={buttonStyle} onClick={() => onDelete(estacion.id)}>Eliminar</Button>
           </>)
       }
   }
@@ -30,7 +30,7 @@ const OpcionesRol = ({rol, estacion, navigate, onDelete}) =>
       if(rol === ur.gestor)
         {
           return (
-            <Button  onClick={() =>
+            <Button style={buttonStyle} onClick={() =>
               navigate(`/estaciones/editar`, { replace: true })}>+</Button>)
   
         }
@@ -45,23 +45,23 @@ const TablaEstaciones = ({ estaciones, onDelete }) => {
           <Table>
             <thead>
               <tr>
-                <th>Nombre</th>
-                <th>Dirección Postal</th>
-                <th>Bicicletas Disponibles</th>
-                <th>Fecha de Alta</th>
-                <th colSpan={numColumnas(rol)}>Acciones</th>
+                <th style={headingTable}>Nombre</th>
+                <th style={headingTable}>Dirección Postal</th>
+                <th style={headingTable}>Bicicletas Disponibles</th>
+                <th style={headingTable}>Fecha de Alta</th>
+                <th style={headingTable} colSpan={numColumnas(rol)}>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {estaciones.map((estacion) => (
-                <tr key={estacion.id}>
-                  <td className="align-middle">{estacion.nombre}</td>
-                  <td className="align-middle">{estacion.dirPostal}</td>
-                  <td className="align-middle">{estacion.bicisDisponibles}</td>
-                  <td className="align-middle">{estacion.fechaAlta}</td>
-                  <td>
+                <tr key={estacion.id} className="hoverable">
+                  <td style={elementTable} className="align-middle">{estacion.nombre}</td>
+                  <td style={elementTable} className="align-middle">{estacion.dirPostal}</td>
+                  <td style={elementTable} className="align-middle">{estacion.bicisDisponibles}</td>
+                  <td style={elementTable} className="align-middle">{estacion.fechaAlta}</td>
+                  <td style={elementTable}>
                   <OpcionesRol rol = {rol} estacion = {estacion} navigate={navigate} onDelete={onDelete}/>
-                    <Button 
+                    <Button  className="mx-1"
                       style={buttonStyle} onClick={() =>
                         navigate(`/estaciones/${estacion.id}`, { replace: true })
                       }

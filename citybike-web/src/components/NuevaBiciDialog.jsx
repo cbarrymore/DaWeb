@@ -63,7 +63,7 @@ const handleChange = (e) => {
         <Modal.Header style={dialogHeadStyle} closeButton>
           <Modal.Title>Nueva Bici</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={dialogBodyStyle}>
+        <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Modelo</Form.Label>
@@ -77,10 +77,10 @@ const handleChange = (e) => {
                 required
               />
             </Form.Group>
-            <Button style={buttonStyle} className='mx-1' variant="primary" type="submit">
+            <Button className='mx-1 boton' variant="primary" type="submit">
                 Añadir
             </Button>
-            <Button style={buttonNegativeStyle} className='mx-1' variant="secondary" onClick={handleClose}>
+            <Button className='mx-1 boton' variant="secondary" onClick={handleClose}>
                 Cancelar
             </Button>
           </Form>

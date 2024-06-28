@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import {buttonStyle} from "../utils/ComponentsStyles";
 
 const Pagination = ({ elementsPerPage,totalPages ,handlePagination,currentPage}) => {
@@ -9,15 +9,15 @@ const Pagination = ({ elementsPerPage,totalPages ,handlePagination,currentPage})
   }
 
   return (
-        <div className="mx-auto">
+        <Container className="d-flex justify-content-center align-items-center">
             {
                 paginationNumbers.map((number) => (
-                    <Button  key={number} onClick={() => handlePagination(number)} className={currentPage === number ? 'active m-1 mb-3' : 'm-1 mb-3' } style={buttonStyle}>
+                    <Button  key={number} onClick={() => handlePagination(number)} className={currentPage === number ? 'active boton' : 'boton' } >
                         {number}
                     </Button>
                 ))
             }
-        </div>
+        </Container>
     )
 };
 

@@ -5,7 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import { fetchUserInfo } from "../apis/AccessAlquileres";
 import { Button, Container, Form } from "react-bootstrap";
-import "../utils/formStyles.css"
+import { appCard } from "../utils/ComponentsStyles";
+import "../utils/generalStyles.css";
+
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -62,8 +64,8 @@ export const LoginPage = () => {
   return ( 
     <>
     <h1>Inicia Sesión</h1>
-    <Container fluid className="d-flex justify-content-center align-items-center my-5">
-      <Form onSubmit={handleLogin} className="p-5 formulario">
+    <Container fluid className="d-flex justify-content-center align-items-center my-5" >
+      <Form onSubmit={handleLogin} className="p-5 formulario" style={appCard}>
         <Form.Group className="m-3" controlId="formBasicEmail">
           <Form.Label>Nombre de usuario</Form.Label>
           <Form.Control required name="username" type="text" value={username}  onChange={(e) => setUsername(e.target.value)} placeholder="Nombre de usuario" />
@@ -72,7 +74,7 @@ export const LoginPage = () => {
           <Form.Label>Contraseña</Form.Label>
           <Form.Control required name="password" type="password" value={password}  onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" />
         </Form.Group>
-        <Button type="submit">Login</Button>
+        <Button type="submit" className="boton">Login</Button>
       </Form>
     </Container>
     </>

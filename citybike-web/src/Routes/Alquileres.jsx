@@ -2,12 +2,13 @@ import { useContext, useEffect, useState } from "react"
 import Gateway from "../configs/constants"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { Button, Col, Container, Modal, Row, Table } from "react-bootstrap"
-import {buttonStyle} from "../utils/ComponentsStyles"
+import {appCard, buttonStyle, elementTable} from "../utils/ComponentsStyles"
 import TablaEstaciones from "../components/TablaEstaciones"
 import { fetchEstaciones } from "../apis/AccessEstaciones"
 import { EstacionesPaginada } from "../components/EstacionesPaginadas"
 import { useNavigate } from "react-router-dom"
 import UserContext from "../contexts/UserContext"
+import "../utils/generalStyles.css"
 
 const DialogEstacionesDejarBicicleta = ({ show, handleClose }) => {
   // const [estaciones, setEstaciones] = useState([])
@@ -34,7 +35,7 @@ const DialogEstacionesDejarBicicleta = ({ show, handleClose }) => {
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleClose}>
+        <Button className="boton" variant="primary" onClick={handleClose}>
           Save Changes
         </Button>
       </Modal.Footer>
@@ -90,40 +91,47 @@ export const Alquileres = () => {
   }
 
   return (
-    <Container fluid>
+    <Container  className=" my-5">
       <Row>
         <h1>Alquileres</h1>
-        <h2>Alquiler activo</h2>
       </Row>
+      <Container className="p-3 my-3" style={appCard}>
+      <h2>Alquiler activo</h2>
+      
       {alquiler !== null ? (
-        <Row xs="auto" className="mb-3">
+        <Container className="d-flex justify-content-center align-items-center">
+        <Row xs="auto" className="mb-3 align-items-center">
           <Col>
             <TablaAlquileres alquileres={[alquiler]} />
           </Col>
           <Col className="align-self-center">
-            <Button style={buttonStyle} onClick={() => setShow(true)}>
+            <Button className="boton" onClick={() => setShow(true)}>
               Devolver bicicleta
             </Button>
           </Col>
         </Row>
+        </Container>
       ) : (
         <Container className="mb-4">
           <Row>
             <p>No hay alquileres activos</p>
           </Row>
-          <Row>
-            <Button style={buttonStyle} onClick={() => navigate("/estaciones")}>
+          <Row className="justify-content-center">
+            <Button className="botonGrande boton" style={buttonStyle} onClick={() => navigate("/estaciones")}>
               Alquilar bicicletas
             </Button>
           </Row>
         </Container>
       )}
+      </Container>
+      <Container className="p-3 my-5" style={appCard}>
       <h2>Historial de alquileres</h2>
       {historialAlquileres.length === 0 ? (
         <p>No hay historial de alquileres</p>
       ) : (
         <TablaAlquileres alquileres={historialAlquileres} />
       )}
+      </Container>
 
       <Modal
         show={show}
@@ -153,10 +161,10 @@ const TablaAlquileres = ({ alquileres }) => {
     <Table striped bordered hover responsive className="mt-2">
       <thead>
         <tr>
-          <th>Id</th>
-          <th>Fecha creación</th>
-          <th>Bicicleta</th>
-          <th>Fecha de fin</th>
+          <th style={elementTable}>Id</th>
+          <th style={elementTable}>Fecha creación</th>
+          <th style={elementTable}>Bicicleta</th>
+          <th style={elementTable}>Fecha de fin</th>
         </tr>
       </thead>
       <tbody>

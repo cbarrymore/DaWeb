@@ -1,15 +1,17 @@
 import { Button, Col, Container, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { userRoles } from "../data/userRoles"
+import { appCard } from "../utils/ComponentsStyles"
+import "../utils/generalStyles.css"
 
 const HomeRol = ({rol}) => {
   if(rol === userRoles.gestor)
     return (
-  <Container>
+  <Container style={appCard}>
     <Row className="p-5">
       <Col>
         <p>Gestiona las estaciones de la aplicación</p>
-        <Button variant="primary" as={Link} to="/estaciones">Estaciones</Button>
+        <Button className="boton mb-5" variant="primary" as={Link} to="/estaciones">Estaciones</Button>
       </Col>
     </Row>
   </Container>
@@ -17,21 +19,21 @@ const HomeRol = ({rol}) => {
   else if(rol===userRoles.usuario)
   {
     return (
-      <Container >
+      <Container style={appCard} >
         <Row>
           <Col className="p-5">
             <p className="home-text">Mira las estaciones que se te ofrecen en Citybike</p>
-            <Button variant="primary" as={Link} to="/estaciones">Estaciones</Button>
+            <Button className="boton" variant="primary" as={Link} to="/estaciones">Estaciones</Button>
           </Col>
         </Row>
-        <Row>
+        <Row className="mb-5">
           <Col>
             <p>Mira si tienes una reserva</p>
-            <Button variant="primary" as={Link} to="/reservas">Reservas</Button>
+            <Button className="boton" variant="primary" as={Link} to="/reservas">Reservas</Button>
           </Col>
           <Col>
             <p>Gestiona tu alquiler y mira los anteriores</p>
-            <Button variant="primary" as={Link} to="/alquileres">Alquileres</Button>
+            <Button className="boton" variant="primary" as={Link} to="/alquileres">Alquileres</Button>
           </Col>
         </Row>
       </Container>
@@ -40,13 +42,13 @@ const HomeRol = ({rol}) => {
   else
   {
     return(
-      <Container >
+      <Container style={appCard}>
         <Row className="p-5">
           <Col>
             <p>
               Unete a la comunidad de Citybike
             </p>
-            <Button variant="primary" as={Link} to="/registrarse">Registrarse</Button>
+            <Button className="boton" variant="primary" as={Link} to="/registrarse">Registrarse</Button>
           </Col>
         </Row>
         <Row>
@@ -54,7 +56,7 @@ const HomeRol = ({rol}) => {
             <p>
               ¿Ya tienes cuenta? Inicia Sesión
             </p>
-            <Button variant="primary" as={Link} to="/login">Login</Button>
+            <Button className="boton mb-5" variant="primary" as={Link} to="/login">Login</Button>
           </Col>
         </Row>
       </Container>

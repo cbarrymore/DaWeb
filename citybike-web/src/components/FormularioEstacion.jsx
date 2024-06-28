@@ -4,8 +4,8 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../hooks/useAuth";
 import { Button, Container, Form } from "react-bootstrap";
 import { crearEstacion, fetchEstacion, modificarEstacion } from "../apis/AccessEstaciones";
-import { buttonNegativeStyle, buttonStyle, formStyle } from "../utils/ComponentsStyles";
-import "../utils/formStyles.css"
+import { appCard, buttonNegativeStyle, buttonStyle } from "../utils/ComponentsStyles";
+import "../utils/generalStyles.css"
 
 export async function loader({ params }) {
     const estacionRet = await fetchEstacion(params.id)
@@ -78,7 +78,7 @@ const FormularioEstacion = () => {
       <>
       <HeaderFormulario objEstacion={objEstacion}/>
       <Container fluid className="d-flex justify-content-center align-items-center my-5">
-      <Form onSubmit={handleSubmit} className="p-5 formulario">
+      <Form onSubmit={handleSubmit} className="p-5 formulario" style={appCard}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Nombre</Form.Label>
         <Form.Control  className="align-middle" required name="nombre" type="text" value={form.nombre} onChange={handleChange} placeholder="Nombre de estación" />
@@ -103,10 +103,10 @@ const FormularioEstacion = () => {
         <Form.Control name="longitud" type="number" step={0.0001}
         placeholder="Longitud" value={form.longitud} onChange={handleChange} required/>
       </Form.Group>
-      <Button className="mx-1" style={buttonStyle} variant="primary" type="submit">
+      <Button className="mx-1 boton" variant="primary" type="submit">
         Confirmar
       </Button>
-      <Button className="mx-1" style={buttonNegativeStyle} variant="secondary" onClick={() => navigate("/estaciones")}>
+      <Button className="mx-1 botonCancelar" variant="secondary" onClick={() => navigate("/estaciones")}>
           Atrás
         </Button>
     </Form>

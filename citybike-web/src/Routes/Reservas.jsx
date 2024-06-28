@@ -7,6 +7,7 @@ import {buttonStyle, buttonNegativeStyle, appCard, elementTable} from "../utils/
 import { useNavigate } from "react-router-dom"
 import UserContext from "../contexts/UserContext"
 import { cancelarReserva, confirmarReserva, fetchUserInfo } from "../apis/AccessAlquileres"
+import LoadingModal from "../components/LoadingModal"
 import "../utils/generalStyles.css"
 
 export const Reservas = () => {
@@ -15,15 +16,19 @@ export const Reservas = () => {
   const idUser = localStorage.getItem("id")
   const {reservas,setReservas,alquiler,setAlquiler,updateUserContext} = useContext(UserContext)
   const [update, setUpdate] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
   useEffect(() => {
-    updateUserContext()
+      setLoading(true)
+      updateUserContext()
+      setLoading(false)
   },[update])
 
   
 
   const handleConfirmarReserva = async (idReserva) => {
+    setLoading(true)
     confirmarReserva().then(() => {
       fetchUserInfo().then((data) => {
         setUserInfo(data)
@@ -39,11 +44,12 @@ export const Reservas = () => {
         title: "Oops...",
         text: "Error al confirmar la reserva" + error,
       })
-    })
+    }).finally(() => setLoading(false))
     
   }
 
-  const handleCancelarReserva = async (idReserva) => {
+  const handleCancelarReserva = async () => {
+    setLoading(true)
     cancelarReserva().then(() => {
       fetchUserInfo().then((data) => {
         setUserInfo(data)
@@ -57,7 +63,7 @@ export const Reservas = () => {
         title: "Oops...",
         text: "Error al cancelar la reserva" + error,
       })
-    })
+    }).finally(() => setLoading(false))
     
   }
 
@@ -106,6 +112,7 @@ export const Reservas = () => {
           </tbody>
         </Table>
       )}
+      <LoadingModal show={loading} />
     </Container>
     </>
   )

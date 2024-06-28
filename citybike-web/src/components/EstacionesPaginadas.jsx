@@ -11,7 +11,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import { appCard, headingTable } from "../utils/ComponentsStyles";
 
 export const EstacionesPaginada = ({filters}) => {
-    const  {token} = useAuth();
     const [stations, setStations] = useState([]);
     // const [filteredStations, setFilteredStations] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -22,6 +21,7 @@ export const EstacionesPaginada = ({filters}) => {
     const [filtroNumBicicletas, setFiltroNumBicicletas] = useState(null);
     const [filtroNombre, setFiltroNombre] = useState('');
     const [filtroCodigoPostal, setFiltroCodigoPostal] = useState('');
+    const  {token} = useAuth();
     
     useEffect(() => {
         getEstaciones();
@@ -62,26 +62,8 @@ export const EstacionesPaginada = ({filters}) => {
         // setFilteredStations(result);
     };
 
-    const handleFiltroNombre = () => {
-        const filteredStations = stations.lenght === 0 ? 
-                                    stations.filter(e=> e.nombre.includes(filtroNombre))
-                                    : filteredStations.filter(fe => fe.nombre.includes(filtroNombre));
-        console.log(filteredStations.length);
-        setFilteredStations(filteredStations);
-    };
-    const handleFiltroCodigoPostal = () => {
-        const filteredStations = stations.lenght === 0 ? 
-                                    stations.filter(e => e.dirPostal.toString().startsWith( filtroCodigoPostal))
-                                    : filteredStations.filter(fe => fe.dirPostal.toString().startsWith( filtroCodigoPostal));
-        setFilteredStations(filteredStations);
-    };
-    const handleFiltroNumBicicletas = () => {
-        const filteredStations = stations.lenght === 0 ?
-                                    stations.filter(e => e.numBicicletas === filtroNumBicicletas)
-                                    : filteredStations.filter(fe => fe.numBicicletas === filtroNumBicicletas);
-        setFilteredStations(filteredStations);
-    };
     const getEstaciones =  () => {
+        setLoading(true);
         fetchEstaciones(currentPage, stationsPerPage).then((data) => {
             const estaciones = data._embedded.estacionDtoList
             if (!estaciones) {
@@ -104,38 +86,20 @@ export const EstacionesPaginada = ({filters}) => {
             text: "No se ha podido obtener la lista de estaciones\n" + err.message,
             icon: "error",
             confirmButtonText: "Ok"
-        }))
+        })).finally(() => setLoading(false));
         
     };
 
-    const handleCreate = async (station) => {
-        return;
-        const response = await axios.post('/api/stations', station);
-        setStations([...stations, response.data]);
-    };
 
-    const handleUpdate = async (updatedStation) => {
-        try{
-
-        }catch(err){
-            if (err.name === "AbortError") {
-                alert(
-                    "Fetch aborted by user action (browser stop button, closing tab, etc.",
-                );
-            } else if (err.name === "TypeError") {
-                alert("AbortSignal.timeout() method is not supported");
-            } else {
-                // A network error, or some other problem.
-                alert(`Error: type: ${err.name}, message: ${err.message}`);
-            }
-        }
-        return;
-        const response = await axios.put(`/api/stations/${updatedStation.id}`, updatedStation);
-        setStations(stations.map(station => station.id === updatedStation.id ? response.data : station));
-    };
 
     const handleDelete = (id) => {
-        deleteEstacion(id)
+        setLoading(true);
+        deleteEstacion(id).catch((err) => Swal.fire({
+            title: "Error",
+            text: "No se ha podido eliminar la estación\n" + err.message,
+            icon: "error",
+            confirmButtonText: "Ok"
+        })).finally(() => setLoading(false));
         setStations(stations.filter(station => station.id !== id));
         handleFiltros();
     };

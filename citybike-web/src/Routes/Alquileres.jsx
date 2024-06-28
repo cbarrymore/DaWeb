@@ -8,6 +8,7 @@ import { fetchEstaciones } from "../apis/AccessEstaciones"
 import { EstacionesPaginada } from "../components/EstacionesPaginadas"
 import { useNavigate } from "react-router-dom"
 import UserContext from "../contexts/UserContext"
+import LoadingModal from "../components/LoadingModal"
 import "../utils/generalStyles.css"
 
 const DialogEstacionesDejarBicicleta = ({ show, handleClose }) => {
@@ -45,18 +46,22 @@ const DialogEstacionesDejarBicicleta = ({ show, handleClose }) => {
 
 export const Alquileres = () => {
   const [userInfo, setUserInfo] = useLocalStorage("userInfo", null)
+  const [show, setShow] = useState(false)
+  const [estaciones, setEstaciones] = useState([])
+  const [loading, setLoading] = useState(false)
+
   const token = localStorage.getItem("token")
   const idUser = localStorage.getItem("id")
   const { alquiler, setAlquiler, historialAlquileres, setHistorialAlquileres,updateUserContext } =
     useContext(UserContext)
-  const [show, setShow] = useState(false)
-  const [estaciones, setEstaciones] = useState([])
   const navigate = useNavigate()
 
   const handleClose = () => setShow(false)
 
   useEffect(() => {
+      setLoading(true)
       updateUserContext()
+      setLoading(false)
   }, [idUser, token])
 
   const handleDevolverBicicleta = async (idEstacion) => {
@@ -152,6 +157,7 @@ export const Alquileres = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      <LoadingModal show={loading} />
     </Container>
   )
 }

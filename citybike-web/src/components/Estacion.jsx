@@ -11,6 +11,8 @@ import { Button, Container } from "react-bootstrap";
 import { fetchBicicletas } from "../apis/AccessEstaciones";
 import BiciModel from "../Models/BiciModel";
 import {appCard, buttonStyle} from "../utils/ComponentsStyles";
+import {buttonStyle} from "../utils/ComponentsStyles";
+import LoadingModal from "./LoadingModal";
 
 export async function loader({ params }) {
   const estacion = await fetchEstacion(params.id)
@@ -52,27 +54,28 @@ const fetchEstacion = async (id) => {
 
 
 const Estacion = () => {
-    const  {token} = useAuth();
-    const { estacion} = useLoaderData()
-    const idEstacion = estacion.id
     const [bicicletas, setBicicletas] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
     const [bicisPerPage, setBicisPerPage] = useState(4)
     const [totalPages, setTotalPages] = useState(0)
+    const [update, setUpdate] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const  {token} = useAuth();
+    const { estacion} = useLoaderData()
+    const idEstacion = estacion.id
     const navigate = useNavigate()
     const {reservas,setReservas,alquiler,setAlquiler,updateUserContext} = useContext(UserContext)
-    const [update, setUpdate] = useState(false)
 
     useEffect(() => {
         console.log("Actualizamos la lista de bicicletas")
         const result = fetchBicis(idEstacion,currentPage,bicisPerPage)
         updateUserContext()
-        
     },[currentPage,bicisPerPage,update])
 
     
 
     const fetchBicis = async (idEstacion, motivoBaja) => {
+        setLoading(true)
         fetchBicicletas(idEstacion,currentPage,bicisPerPage).then((data) => {
             const bicis = data._embedded?.biciDtoList
             if (!bicis) {
@@ -95,7 +98,7 @@ const Estacion = () => {
             text: "No se ha podido obtener la lista de bicicletas\n" + err.message,
             icon: "error",
             confirmButtonText: "Ok"
-        }))
+        })).finally(() => setLoading(false))
     }
 
     const handleDarBajaBici = async (codigoBici,motivo) => {
@@ -129,6 +132,7 @@ const Estacion = () => {
 
     const handleReservarBici = async (codigoBici) => {
         console.log(codigoBici)
+        setLoading(true)
         crearReserva(codigoBici).then(() => fetchBicis(idEstacion))
         .then(() =>{ 
             updateUserContext()
@@ -149,11 +153,12 @@ const Estacion = () => {
             text: "No se ha podido reservar la bicicleta\n" + err.message,
             icon: "error",
             confirmButtonText: "Ok"
-        }))
+        })).finally(() => setLoading(false))
 
     }
 
     const handleAlquilarBici = async (codigoBici) => {
+        setLoading(true)
         alquilarBicicleta(codigoBici).then(() => {
             Swal.fire({
                 title: "Bicicleta alquilada",
@@ -163,12 +168,14 @@ const Estacion = () => {
             })
             setUpdate(!update)
             setReservas([])
-        }).catch((err) => Swal.fire({
+        }).catch((err) => (
+            Swal.fire({
             title: "Error",
             text: "No se ha podido alquilar la bicicleta\n" + err.message,
             icon: "error",
             confirmButtonText: "Ok"
-        })
+            })
+        ).finally(() => setLoading(false))
         )
     }
 
@@ -178,6 +185,7 @@ const Estacion = () => {
 
     const handleDejarBici = async () => {
         console.log(alquiler)
+        setLoading(true)
         if(alquiler !== null){
             dejarBicicleta(idEstacion).then(() => {
                 Swal.fire({
@@ -193,7 +201,7 @@ const Estacion = () => {
                 text: "No se ha podido devolver la bicicleta" + err.message,
                 icon: "error",
                 confirmButtonText: "Ok"
-            }))
+            })).finally(() => setLoading(false))
         }
     }
 
@@ -213,7 +221,7 @@ const Estacion = () => {
         <ListaBicis bicis={bicicletas} onAlquiler={handleAlquilarBici} onReserva={handleReservarBici} idEstacion={idEstacion} />
         <Pagination elementsPerPage={bicisPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
         <Button className="boton mt-3" onClick={() => navigate("/estaciones")}>Volver</Button>
-        
+        <LoadingModal show={loading} />
     </Container></Container>
     )
 }

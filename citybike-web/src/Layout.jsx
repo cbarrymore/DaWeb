@@ -6,8 +6,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./Layout.css"
 import Banner from "./components/Banner"
+import { useAuth } from "./hooks/useAuth"
 
 const MainContent = () => {
+  const { user, logout, role } = useAuth()
   return (
     <div className="bg-light flex-fill h-100">
       <div className="p-2 d-md-none d-flex text-white bg-success">
@@ -19,8 +21,15 @@ const MainContent = () => {
         >
           <i className="fa-solid fa-bars"></i>
         </a>
-        <span className="ms-3">Citybike</span>
+        <div className="ms-3">Citybike</div>
+        <div className="ms-auto d-flex justify-content-top">
+          <span>
+            <h6 className="">Usuario: {user}</h6>
+            <h6 className="">Rol: {role}</h6>
+          </span>
+        </div>
       </div>
+
       <div className="p-4">
         <hr />
         <Row>

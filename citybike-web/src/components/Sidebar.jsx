@@ -27,9 +27,9 @@ const Sidebar = () => {
       show={show}
       onHide={handleClose}
       backdrop={false}
-      className="d-flex flex-column flex-shrink-0 p-4 bg-success text-white"
+      className="d-flex flex-column flex-shrink-0 p-4 bg-success text-white "
       style={{ width: "250px"}}
-      responsive="md"
+      responsive="lg"
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title className="navbar-brand"></Offcanvas.Title>

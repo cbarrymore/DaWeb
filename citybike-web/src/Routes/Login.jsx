@@ -4,36 +4,47 @@ import Gateway from "../configs/constants"
 import { useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import { fetchUserInfo } from "../apis/AccessAlquileres";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form, Spinner } from "react-bootstrap";
+import Swal from "sweetalert2";
+import LoadingModal from "../components/LoadingModal";
+
+
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const {reservas,setReservas,alquiler,setAlquiler , updateUserContext} = useContext(UserContext)
+
   
   
   const handleLogin = async (e) => {
     e.preventDefault();
-    const controller = new AbortController();    
-    // Cancel the fetch request in 500ms
-    setTimeout(() => controller.abort(), 500);
-    
-
+    setLoading(true);
     const path = Gateway + "/auth/login?" + "username=" + username + "&password=" + password;
     
     const requestOptions = {
       method: "GET",
       redirect: "follow",
-      signal: AbortSignal.timeout(2000)
+      signal: AbortSignal.timeout(5000)
     };
     
     try{
       const response= await fetch(path, requestOptions)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if(!response.ok){
+        if (response.status === 50) {
+          Swal.fire({
+            title: "Error",
+            text: "Usuario o contraseña incorrectos",
+            icon: "error",
+          });
+          return;
+        }
+        const errorMessage = await response.text()
+        throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
       }
       const data = await response.json()
       data.username = username
@@ -43,19 +54,14 @@ export const LoginPage = () => {
       navigate(from, { replace: true });
     }
     catch(err){
-      if (err.name === "TimeoutError") {
-        alert("Timeout: It took more than 2 seconds to get the result!");
-      } else if (err.name === "AbortError") {
-        alert(
-          "Fetch aborted by user action (browser stop button, closing tab, etc.",
-        );
-      } else if (err.name === "TypeError") {
-        alert("AbortSignal.timeout() method is not supported");
-      } else {
-        // A network error, or some other problem.
-        alert(`Error: type: ${err.name}, message: ${err.message}`);
-      }
+      Swal.fire({
+        title: "Error",
+        text: "Error al iniciar sesión. Vuelva a intentarlo\n" + err.message,
+        icon: "error",
+      });
+      setLoading(false);
     }
+    setLoading(false);
   };
 
   return ( 
@@ -71,6 +77,7 @@ export const LoginPage = () => {
         </Form.Group>
         <Button type="submit">Login</Button>
       </Form>
+      <LoadingModal show={loading} />
     </Container>
   );
 };

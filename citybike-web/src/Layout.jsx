@@ -11,8 +11,8 @@ import { useAuth } from "./hooks/useAuth"
 const MainContent = () => {
   const { user, logout, role } = useAuth()
   return (
-    <div className="bg-light flex-fill h-100">
-      <div className="p-2 d-md-none d-flex text-white bg-success">
+    <div className="bg-white flex-fill main-content-div min-vh-100" >
+      <div className="p-2 d-lg-none d-flex text-white bg-success banner">
         <a
           href="#"
           className="text-white"
@@ -44,7 +44,7 @@ const MainContent = () => {
 
 export const Layout = () => {
   return (
-    <Container fluid className="p-0 d-flex h-100" style={{ width: "100vw" }}>
+    <Container fluid className="p-0 d-flex h-100" style={{ width: "100vw"}}>
       <Sidebar />
       <MainContent />
     </Container>

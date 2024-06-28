@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import Gateway from '../configs/constants';
 import { darBajaBici } from '../apis/AccessEstaciones';
+import { buttonNegativeStyle, buttonStyle, dialogHeadStyle, dialogBodyStyle } from '../utils/ComponentsStyles';
 
 
 const BorrarBici = (idEstacion, idBici, motivoBaja) => {
@@ -19,7 +20,7 @@ const BorrarBici = (idEstacion, idBici, motivoBaja) => {
   .catch((error) => {
       Swal.fire({
           title: 'Error!',
-          text: `No se pudo añadir la bici. ${error}`,
+          text: `No se pudo dar de baja la bici. ${error}`,
           icon: 'error',
           confirmButtonText: 'Ok'
       });
@@ -71,15 +72,15 @@ open={open}
 
           return (
             <>
-              <Button variant="primary" onClick={handleShow}>
+              <Button variant="primary" style={buttonNegativeStyle} onClick={handleShow}>
                 -
               </Button>
         
               <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header closeButton>
+                <Modal.Header style={dialogHeadStyle} closeButton >
                   <Modal.Title>Nueva Bici</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={dialogBodyStyle}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                       <Form.Label>Motivo de la baja</Form.Label>
@@ -93,11 +94,11 @@ open={open}
                         required
                       />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button className='mx-1' style={buttonStyle} variant="primary" type="submit">
                         Eliminar
                     </Button>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
+                    <Button className='mx-1' style={buttonNegativeStyle} variant="secondary" onClick={handleClose}>
+                        Cancelar
                     </Button>
                   </Form>
                 </Modal.Body>

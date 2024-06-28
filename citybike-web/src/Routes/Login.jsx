@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import { fetchUserInfo } from "../apis/AccessAlquileres";
 import { Button, Container, Form } from "react-bootstrap";
+import "../utils/formStyles.css"
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -59,8 +60,10 @@ export const LoginPage = () => {
   };
 
   return ( 
-    <Container>
-      <Form onSubmit={handleLogin}>
+    <>
+    <h1>Inicia Sesión</h1>
+    <Container fluid className="d-flex justify-content-center align-items-center my-5">
+      <Form onSubmit={handleLogin} className="p-5 formulario">
         <Form.Group className="m-3" controlId="formBasicEmail">
           <Form.Label>Nombre de usuario</Form.Label>
           <Form.Control required name="username" type="text" value={username}  onChange={(e) => setUsername(e.target.value)} placeholder="Nombre de usuario" />
@@ -72,5 +75,6 @@ export const LoginPage = () => {
         <Button type="submit">Login</Button>
       </Form>
     </Container>
+    </>
   );
 };

@@ -1,0 +1,12 @@
+@import url(../configs/palette.css);
+
+.formulario{
+    background-color: var(--sandy-brown);
+    border-radius: 2em;
+    width: 30vw;
+}
+@media (max-width: 1000px){
+    .formulario{
+        width: 300px;
+    }
+}

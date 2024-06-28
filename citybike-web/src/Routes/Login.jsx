@@ -4,6 +4,7 @@ import Gateway from "../configs/constants"
 import { useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import { fetchUserInfo } from "../apis/AccessAlquileres";
+import { Button, Container, Form } from "react-bootstrap";
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -57,31 +58,19 @@ export const LoginPage = () => {
     }
   };
 
-  return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+  return ( 
+    <Container>
+      <Form onSubmit={handleLogin}>
+        <Form.Group className="m-3" controlId="formBasicEmail">
+          <Form.Label>Nombre de usuario</Form.Label>
+          <Form.Control required name="username" type="text" value={username}  onChange={(e) => setUsername(e.target.value)} placeholder="Nombre de usuario" />
+        </Form.Group>
+        <Form.Group className="m-3 mb-5" controlId="formBasicEmail">
+          <Form.Label>Contraseña</Form.Label>
+          <Form.Control required name="password" type="password" value={password}  onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" />
+        </Form.Group>
+        <Button type="submit">Login</Button>
+      </Form>
+    </Container>
   );
 };

@@ -6,7 +6,7 @@ const HomeRol = ({rol}) => {
   if(rol === userRoles.gestor)
     return (
   <Container>
-    <Row>
+    <Row className="p-5">
       <Col>
         <p>Gestiona las estaciones de la aplicación</p>
         <Button variant="primary" as={Link} to="/estaciones">Estaciones</Button>
@@ -17,10 +17,10 @@ const HomeRol = ({rol}) => {
   else if(rol===userRoles.usuario)
   {
     return (
-      <Container>
+      <Container >
         <Row>
-          <Col>
-            <p>Mira las estaciones que se te ofrecen en Citybike</p>
+          <Col className="p-5">
+            <p className="home-text">Mira las estaciones que se te ofrecen en Citybike</p>
             <Button variant="primary" as={Link} to="/estaciones">Estaciones</Button>
           </Col>
         </Row>
@@ -40,8 +40,8 @@ const HomeRol = ({rol}) => {
   else
   {
     return(
-      <Container>
-        <Row>
+      <Container >
+        <Row className="p-5">
           <Col>
             <p>
               Unete a la comunidad de Citybike
@@ -69,7 +69,7 @@ export const Home = () => {
     <Row className="justify-content-center">
       <Col md={8} className="text-center">
         <h1>Welcome to Citybike</h1>
-        <h2 color="gray">
+        <h2>
           Your one-stop solution for renting bicycles in the city. 
         </h2>
         <h3>

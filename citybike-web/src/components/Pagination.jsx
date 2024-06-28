@@ -1,3 +1,5 @@
+import { Button } from "react-bootstrap";
+
 const Pagination = ({ elementsPerPage,totalPages ,handlePagination,currentPage}) => {
   const paginationNumbers = [];
  
@@ -6,12 +8,12 @@ const Pagination = ({ elementsPerPage,totalPages ,handlePagination,currentPage})
   }
 
   return (
-        <div className='pagination'>
+        <div className="mx-auto">
             {
                 paginationNumbers.map((number) => (
-                    <button key={number} onClick={() => handlePagination(number)} className={currentPage === number ? 'active' : ''}>
+                    <Button  key={number} onClick={() => handlePagination(number)} className={currentPage === number ? 'active m-1' : 'm-1 mb-3' }>
                         {number}
-                    </button>
+                    </Button>
                 ))
             }
         </div>

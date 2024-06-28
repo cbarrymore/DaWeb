@@ -8,7 +8,7 @@ function numColumnas(rol)
 {
   if(rol == ur.gestor)
   {
-    return 2;
+    return 3;
   }
   return 1;
 }
@@ -17,11 +17,11 @@ const OpcionesRol = ({rol, estacion, navigate, onDelete}) =>
     if(rol === ur.gestor)
       {
         return (
-          <td>
-          <Button style={buttonStyle} onClick={() =>
+          <>
+          <Button  style={buttonStyle} onClick={() =>
                   navigate(`/estaciones/editar/${estacion.id}`, { replace: true })}>Editar</Button>
-          <Button style={buttonStyle} onClick={() => onDelete(estacion.id)}>Eliminar</Button>
-          </td>)
+          <Button className="mx-2" style={buttonStyle} onClick={() => onDelete(estacion.id)}>Eliminar</Button>
+          </>)
       }
   }
 
@@ -55,20 +55,20 @@ const TablaEstaciones = ({ estaciones, onDelete }) => {
             <tbody>
               {estaciones.map((estacion) => (
                 <tr key={estacion.id}>
-                  <td>{estacion.nombre}</td>
-                  <td>{estacion.dirPostal}</td>
-                  <td>{estacion.bicisDisponibles}</td>
-                  <td>{estacion.fechaAlta}</td>
-                  <OpcionesRol rol = {rol} estacion = {estacion} navigate={navigate} onDelete={onDelete}/>
+                  <td className="align-middle">{estacion.nombre}</td>
+                  <td className="align-middle">{estacion.dirPostal}</td>
+                  <td className="align-middle">{estacion.bicisDisponibles}</td>
+                  <td className="align-middle">{estacion.fechaAlta}</td>
                   <td>
-                    <Button
+                  <OpcionesRol rol = {rol} estacion = {estacion} navigate={navigate} onDelete={onDelete}/>
+                    <Button 
                       style={buttonStyle} onClick={() =>
                         navigate(`/estaciones/${estacion.id}`, { replace: true })
                       }
                     >
                       Ver
                     </Button>
-                    <Button style={buttonStyle} onClick={() => test(estacion.id)}> Test </Button>
+                    
                   </td>
                 </tr>
               ))}

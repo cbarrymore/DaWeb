@@ -1,15 +1,15 @@
 import { useContext, useState } from "react";
 import Gateway from "../configs/constants"
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Container, Form } from "react-bootstrap";
-
+import { Button, Container, Form, Row } from "react-bootstrap";
+import "./Registrarse.css"
 
 
 const registrarUsuario = async (usuario) => {
+    alert(JSON.stringify(usuario))
       const token = localStorage.getItem("token")
       const uri = Gateway + `/usuarios`
       const myHeaders = new Headers()
-      myHeaders.append("Authorization", "Bearer " + token)
       myHeaders.append('Content-Type', 'application/json')
       const requestOptions = {
         method: "POST",
@@ -60,30 +60,34 @@ export const Registrarse = () =>{
         <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Identificador de usuario</Form.Label>
-          <Form.Control required name="nombre" type="text" value={form.Id} onChange={handleChange} placeholder="Nombre de estación" />
+          <Form.Control required name="Id" type="text" value={form.Id} onChange={handleChange} placeholder="Id" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Nombre de usuario</Form.Label>
-          <Form.Control required name="nombre" type="text" value={form.Nombre} onChange={handleChange} placeholder="Nombre de estación" />
+          <Form.Control required name="Username" type="text" value={form.Username} onChange={handleChange} placeholder="Usuario" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Nombre</Form.Label>
-          <Form.Control required name="nombre" type="text" value={form.Nombre} onChange={handleChange} placeholder="Nombre de estación" />
+          <Form.Control required name="Nombre" type="text" value={form.Nombre} onChange={handleChange} placeholder="Nombre" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Codigo de activación</Form.Label>
-          <Form.Control required name="nombre" type="text" value={form.Codigo} onChange={handleChange} placeholder="Nombre de estación" />
+          <Form.Control required name="Codigo" type="text" value={form.Codigo} onChange={handleChange} placeholder="Codigo" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Contraseña</Form.Label>
-          <Form.Control required name="nombre" type="password" value={form.Acceso} onChange={handleChange} placeholder="Nombre de estación" />
+          <Form.Control required name="Acceso" type="password" value={form.Acceso} onChange={handleChange} placeholder="Contraseña" />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Registrarse
-        </Button>
+        <Row className="botonprincipal mt-5 mb-2 mx-auto">
+          <Button variant="primary" type="submit">
+            Registrarse
+          </Button>
+        </Row>
+        <Row className="botonsecundario mx-auto">
         <Button variant="secondary" onClick={() => navigate("/")}>
             Atrás
           </Button>
+        </Row>
       </Form>
       </Container>
       );

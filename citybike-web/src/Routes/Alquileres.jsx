@@ -96,7 +96,7 @@ export const Alquileres = () => {
         <h2>Alquiler activo</h2>
       </Row>
       {alquiler !== null ? (
-        <Row xs="auto">
+        <Row xs="auto" className="mb-3">
           <Col>
             <TablaAlquileres alquileres={[alquiler]} />
           </Col>
@@ -107,7 +107,7 @@ export const Alquileres = () => {
           </Col>
         </Row>
       ) : (
-        <>
+        <Container className="mb-4">
           <Row>
             <p>No hay alquileres activos</p>
           </Row>
@@ -116,7 +116,7 @@ export const Alquileres = () => {
               Alquilar bicicletas
             </Button>
           </Row>
-        </>
+        </Container>
       )}
       <h2>Historial de alquileres</h2>
       {historialAlquileres.length === 0 ? (
@@ -150,7 +150,7 @@ export const Alquileres = () => {
 
 const TablaAlquileres = ({ alquileres }) => {
   return (
-    <Table striped bordered hover responsive>
+    <Table striped bordered hover responsive className="mt-2">
       <thead>
         <tr>
           <th>Id</th>

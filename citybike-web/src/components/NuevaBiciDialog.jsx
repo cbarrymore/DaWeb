@@ -55,7 +55,7 @@ const handleChange = (e) => {
   }
   return (
     <>
-      <Button style={buttonStyle} variant="primary" onClick={handleShow}>
+      <Button className='boton' variant="primary" onClick={handleShow}>
         +
       </Button>
 
@@ -80,7 +80,7 @@ const handleChange = (e) => {
             <Button className='mx-1 boton' variant="primary" type="submit">
                 Añadir
             </Button>
-            <Button className='mx-1 boton' variant="secondary" onClick={handleClose}>
+            <Button className='mx-1 botonCancelar' variant="secondary" onClick={handleClose}>
                 Cancelar
             </Button>
           </Form>

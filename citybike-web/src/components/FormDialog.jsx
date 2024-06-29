@@ -97,7 +97,7 @@ open={open}
                     <Button className='mx-1 boton' variant="primary" type="submit">
                         Eliminar
                     </Button>
-                    <Button className='mx-1 boton' variant="secondary" onClick={handleClose}>
+                    <Button className='mx-1 botonCancelar' variant="secondary" onClick={handleClose}>
                         Cancelar
                     </Button>
                   </Form>

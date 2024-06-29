@@ -97,7 +97,7 @@ export const Reservas = () => {
           </Row>
         </Container>
       ) : (
-        <Table striped bordered hover>
+        <Table responsive striped bordered hover>
           <thead>
             <tr>
               <th style={elementTable}>Id</th>

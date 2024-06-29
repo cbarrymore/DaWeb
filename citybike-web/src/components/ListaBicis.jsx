@@ -53,7 +53,7 @@ const ListaBicis = ({ bicis,onReserva,onAlquiler, idEstacion }) => {
     <Container>
       <Row>
         <Col>
-          <Table>
+          <Table responsive bordered hover>
             <thead>
               <tr>
                 <th style={elementTable}>Codigo</th>

@@ -3,29 +3,12 @@ import Gateway from "../configs/constants"
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Container, Form, Row } from "react-bootstrap";
 import "./Registrarse.css"
-
-
-const registrarUsuario = async (usuario) => {
-    alert(JSON.stringify(usuario))
-      const token = localStorage.getItem("token")
-      const uri = Gateway + `/usuarios`
-      const myHeaders = new Headers()
-      myHeaders.append('Content-Type', 'application/json')
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body : JSON.stringify(usuario),
-        redirect: "follow",
-      
-      }
-      const response = await fetch(uri, requestOptions)
-      if(!response.ok){
-        const errorMessage = await response.text()
-        throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
-      }
-}
+import { appCard } from "../utils/ComponentsStyles";
+import { registrarUsuario } from "../apis/AccessUsuario";
+import LoadingModal from "../components/LoadingModal"
 
 export const Registrarse = () =>{
+  const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [form, setForm] = useState({
         Id: '',
@@ -45,20 +28,44 @@ export const Registrarse = () =>{
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        registrarUsuario(form)
-        setForm({
+        setLoading(true)
+        registrarUsuario(form).then(() => {
+          setForm({
             Id: '',
             Username: '',
             Nombre: '',
             Codigo: '',
             Acceso: ''
         });
-        navigate(`/estaciones`)
+        Swal.fire({
+          title: 'Registrado!',
+          text: 'Te has registrado correctamente. Inicia sesión para empezar a disfutar de la aplicación',
+          icon: 'success',
+          confirmButtonText: 'Ok'
+        });
+        
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error al registrarse" + error,
+          });
+          setLoading(false);
+        })
+        if(loading)
+        {
+          setLoading(false)
+          navigate(`/login`)
+        }
+        
     };
     return (
-        <Container>
-        <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+      <>
+        <h1>Registrarse</h1>
+        <Container style={appCard} className="d-flex justify-content-center align-items-center my-5">
+        <Form className="formulario" onSubmit={handleSubmit}>
+        <Form.Group className="my-3" controlId="formBasicEmail">
           <Form.Label>Identificador de usuario</Form.Label>
           <Form.Control required name="Id" type="text" value={form.Id} onChange={handleChange} placeholder="Id" />
         </Form.Group>
@@ -78,17 +85,19 @@ export const Registrarse = () =>{
           <Form.Label>Contraseña</Form.Label>
           <Form.Control required name="Acceso" type="password" value={form.Acceso} onChange={handleChange} placeholder="Contraseña" />
         </Form.Group>
-        <Row className="botonprincipal mt-5 mb-2 mx-auto">
-          <Button variant="primary" type="submit">
+        <Row className="mt-5 mb-2 mx-auto justify-content-center">
+          <Button className="boton botonGrande" variant="primary" type="submit">
             Registrarse
           </Button>
         </Row>
-        <Row className="botonsecundario mx-auto">
-        <Button variant="secondary" onClick={() => navigate("/")}>
+        <Row className="botonsecundario mb-3 mx-auto justify-content-center">
+        <Button className="botonCancelar botonGrande" variant="secondary" onClick={() => navigate("/")}>
             Atrás
           </Button>
         </Row>
       </Form>
       </Container>
+      <LoadingModal show={loading} />
+      </>
       );
 }

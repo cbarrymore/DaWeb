@@ -49,6 +49,7 @@ const TablaEstaciones = ({ estaciones, onDelete }) => {
                 <th style={elementTable}>Dirección Postal</th>
                 <th style={elementTable}>Bicicletas Disponibles</th>
                 <th style={elementTable}>Fecha de Alta</th>
+                <th style={elementTable}>Número de puestos</th>
                 <th style={elementTable} colSpan={numColumnas(rol)}>Acciones</th>
               </tr>
             </thead>
@@ -59,6 +60,7 @@ const TablaEstaciones = ({ estaciones, onDelete }) => {
                   <td  className="align-middle">{estacion.dirPostal}</td>
                   <td  className="align-middle">{estacion.bicisDisponibles}</td>
                   <td  className="align-middle">{estacion.fechaAlta}</td>
+                  <td className="align-middle">{estacion.numPuestos}</td>
                   <td >
                   <OpcionesRol rol = {rol} estacion = {estacion} navigate={navigate} onDelete={onDelete}/>
                     <Button  className="mx-1 boton" onClick={() =>

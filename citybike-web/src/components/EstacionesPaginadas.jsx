@@ -72,7 +72,8 @@ export const EstacionesPaginada = ({filters}) => {
                     estacion.nombre,
                     estacion.dirPostal,
                     estacion.bicisDisponibles,
-                    estacion.fechaAlta
+                    estacion.fechaAlta,
+                    estacion.numPuestos
                 )
             })
             
@@ -106,7 +107,8 @@ export const EstacionesPaginada = ({filters}) => {
     };
 
     const handlePagination = (pageNumber) => {
-        setCurrentPage(pageNumber !== 0 ? pageNumber - 1 : 0);
+        console.log(pageNumber);
+        setCurrentPage(pageNumber );
     }
 
     return (

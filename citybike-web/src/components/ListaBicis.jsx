@@ -6,14 +6,14 @@ import { useContext} from 'react';
 import UserContext from '../contexts/UserContext';
 import { elementTable} from "../utils/ComponentsStyles"
 
-const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
+const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, onDeleteBici, idEstacion}) => {
     const {alquiler, reservas} = useContext(UserContext);
 
   if(rol === ur.gestor)
     {
       return (
         <td>
-        <FormDialog idBici={biciCodigo} idEstacion={idEstacion}/>
+        <FormDialog idBici={biciCodigo} idEstacion={idEstacion} onDeleteBici={onDeleteBici}/>
         </td>
       )
     }
@@ -34,18 +34,18 @@ const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
     }
 }
 
-const CrearBici = ({rol,idEstacion}) =>
+const CrearBici = ({rol,idEstacion,callback}) =>
   {
     if(rol === ur.gestor)
       {
         return (
-          <NuevaBiciDialog idEstacion={idEstacion} />
+          <NuevaBiciDialog idEstacion={idEstacion} callback={callback}/>
         )
 
       }
   }
 
-const ListaBicis = ({ bicis,onReserva,onAlquiler, idEstacion }) => {
+const ListaBicis = ({ bicis,onReserva,onAlquiler, onNuevaBici, onDeleteBici, idEstacion}) => {
   console.log(idEstacion)
   const {alquiler, reservas} = useContext(UserContext);
 
@@ -74,7 +74,7 @@ const ListaBicis = ({ bicis,onReserva,onAlquiler, idEstacion }) => {
                   {bici.fechaBaja ? <td className="align-middle">{bici.fechaBaja}</td> : <td className="align-middle"> - </td>}
                   {bici.motivoBaja ? <td className="align-middle">{bici.motivoBaja}</td> : <td className="align-middle"> - </td>}
                   <td className="align-middle">{bici.disponible ? "Sí" : "No"}</td>
-                    <OpcionesRol rol={localStorage.getItem("role")} onReserva={onReserva} onAlquiler={onAlquiler} biciCodigo={bici.codigo} idEstacion={idEstacion}/>
+                    <OpcionesRol rol={localStorage.getItem("role")} onReserva={onReserva} onAlquiler={onAlquiler} biciCodigo={bici.codigo} onDeleteBici={onDeleteBici} idEstacion={idEstacion}/>
                     {/* <button onClick={() => onBaja(bici.codigo)}>Dar de baja</button> */}
                 </tr>
               ))}
@@ -82,7 +82,7 @@ const ListaBicis = ({ bicis,onReserva,onAlquiler, idEstacion }) => {
           </Table>
         </Col>
         <Col md="auto">
-        <CrearBici rol={localStorage.getItem("role")} idEstacion={idEstacion}/>
+        <CrearBici rol={localStorage.getItem("role")} idEstacion={idEstacion} callback={onNuevaBici}/>
         </Col>
       </Row>
     </Container>

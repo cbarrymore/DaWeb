@@ -99,6 +99,8 @@ export const darAltaBici = async (idEstacion, modelo) => {
       const errorMessage = await response.text()
       throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
     }
+    const data = await response.json()
+    return data
 }
 
 export const darBajaBici = async (idEstacion, codigoBici, motivo) => {

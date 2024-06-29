@@ -18,6 +18,11 @@
     background-color: white !important;
     transition: background-color 0.5s !important;
 }
+.boton-activo {
+    color: black !important;
+    background-color:  var(--persian-green) !important;
+    font-weight: bold !important;
+}
 
 .botonCancelar{
     color: black !important;

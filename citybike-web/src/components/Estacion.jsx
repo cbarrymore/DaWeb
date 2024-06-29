@@ -130,7 +130,8 @@ const Estacion = () => {
     }
 
     const handlePagination = (pageNumber) => {
-        setCurrentPage(pageNumber !== 0 ? pageNumber - 1 : 0);
+        console.log(pageNumber)
+        setCurrentPage(pageNumber );
     }
 
     const handleDejarBici = async () => {
@@ -155,6 +156,17 @@ const Estacion = () => {
         }
     }
 
+
+    const handleNuevaBici = (nuevaBiciModel) => {
+        setUpdate(!update)
+        console.log(nuevaBiciModel)
+        // setBicicletas([...bicicletas,nuevaBiciModel])
+    }
+
+
+    const handleDeleteBici = (codigoBici) => {
+        setBicicletas(bicicletas.filter(bici => bici.codigo !== codigoBici))
+    }
     return (
         <Container>
          <h1>Estacion {estacion.nombre}</h1>
@@ -168,7 +180,7 @@ const Estacion = () => {
             </>
         )}
         
-        <ListaBicis bicis={bicicletas} onAlquiler={handleAlquilarBici} onReserva={handleReservarBici} idEstacion={idEstacion} />
+        <ListaBicis bicis={bicicletas} onAlquiler={handleAlquilarBici} onReserva={handleReservarBici} onNuevaBici={handleNuevaBici} onDeleteBici={handleDeleteBici} idEstacion={idEstacion} />
         <Pagination elementsPerPage={bicisPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
         <Button className="boton mt-3" onClick={() => navigate("/estaciones")}>Volver</Button>
         <LoadingModal show={loading} />

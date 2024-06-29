@@ -1,6 +1,6 @@
 import { Button, Container, Row, Table } from "react-bootstrap"
 import { useLocalStorage } from "../hooks/useLocalStorage"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import Gateway from "../configs/constants"
 import Swal from "sweetalert2"
 import {buttonStyle, buttonNegativeStyle, appCard, elementTable} from "../utils/ComponentsStyles"
@@ -17,11 +17,15 @@ export const Reservas = () => {
   const {reservas,setReservas,alquiler,setAlquiler,updateUserContext} = useContext(UserContext)
   const [update, setUpdate] = useState(false)
   const [loading, setLoading] = useState(false)
+  const hasPageBeenRendered = useRef(false)
 
   const navigate = useNavigate()
   useEffect(() => {
       setLoading(true)
-      updateUserContext()
+      if(!hasPageBeenRendered.current){
+        updateUserContext()
+        hasPageBeenRendered.current = true
+      }
       setLoading(false)
   },[update])
 
@@ -42,7 +46,7 @@ export const Reservas = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Error al confirmar la reserva" + error,
+        text: "Error al confirmar la reserva" + error.message,
       })
     }).finally(() => setLoading(false))
     
@@ -51,21 +55,31 @@ export const Reservas = () => {
   const handleCancelarReserva = async () => {
     setLoading(true)
     cancelarReserva().then(() => {
-      setTimeout(() => {
+      // setTimeout(() => {
+        Swal.fire({
+          title: "Reserva cancelada",
+          text: "Se ha cancelado la reserva correctamente",
+          icon: "success",
+          confirmButtonText: "Ok"
+        })
         fetchUserInfo().then((data) => {
           setUserInfo(data)
           setReservas(data.reservas)
           setUpdate(!update)
         })
-      }, 3000);
+        
+      // }, 3000);
     })
     .catch((error) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Error al cancelar la reserva" + error,
+        text: "Error al cancelar la reserva\n" + error.message,
       })
-    }).finally(() => setLoading(false))
+    }).finally(() => {
+      setReservas([])
+      setLoading(false)
+    })
     
   }
 

@@ -4,11 +4,20 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../hooks/useAuth";
 import { Button, Container, Form } from "react-bootstrap";
 import { crearEstacion, fetchEstacion, modificarEstacion } from "../apis/AccessEstaciones";
-import { buttonNegativeStyle, buttonStyle, formStyle } from "../utils/ComponentsStyles";
+import { buttonNegativeStyle, buttonStyle } from "../utils/ComponentsStyles";
 import "../utils/formStyles.css"
+import Swal from "sweetalert2";
 
 export async function loader({ params }) {
-    const estacionRet = await fetchEstacion(params.id)
+    const estacionRet = await fetchEstacion(params.id).catch((err) => {
+      Swal.fire({
+        title: "Error",
+        text: err.message,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+    )
     return  estacionRet 
   }
 

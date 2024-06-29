@@ -8,6 +8,7 @@ import { fetchEstaciones, deleteEstacion } from "../apis/AccessEstaciones";
 import Swal from "sweetalert2"
 import EstacionModel from "../Models/EstacionModel";
 import { Col, Container, Row } from "react-bootstrap";
+import LoadingModal from "./LoadingModal";
 
 export const EstacionesPaginada = ({filters}) => {
     const [stations, setStations] = useState([]);
@@ -16,7 +17,6 @@ export const EstacionesPaginada = ({filters}) => {
     const [currentPage, setCurrentPage] = useState(0);
     const [stationsPerPage, setStationsPerPage] = useState(4);
     const [totalPages, setTotalPages] = useState(0);
-    const [selectedStation, setSelectedStation] = useState(null);
     const [filtroNumBicicletas, setFiltroNumBicicletas] = useState(null);
     const [filtroNombre, setFiltroNombre] = useState('');
     const [filtroCodigoPostal, setFiltroCodigoPostal] = useState('');
@@ -26,10 +26,7 @@ export const EstacionesPaginada = ({filters}) => {
         getEstaciones();
     }, [currentPage,stationsPerPage]);
     
-    // useEffect(() => {
-    //     handleFiltros();
-    //     console.log(filteredStations);
-    // }, [filtroNombre,filtroCodigoPostal,filtroNumBicicletas,stations,currentPage,stationsPerPage]);
+
     const filteredStations = useMemo(() => {
         let result = [...stations]
         if (filtroNombre) {
@@ -119,6 +116,7 @@ export const EstacionesPaginada = ({filters}) => {
             <Pagination elementsPerPage={stationsPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
             </Col>
             </Row>
+            <LoadingModal loading={loading} />
         </Container>
     );
 

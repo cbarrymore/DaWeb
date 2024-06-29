@@ -50,11 +50,13 @@ export const Reservas = () => {
   const handleCancelarReserva = async () => {
     setLoading(true)
     cancelarReserva().then(() => {
-      fetchUserInfo().then((data) => {
-        setUserInfo(data)
-        setReservas(data.reservas)
-        setUpdate(!update)
-      })
+      setTimeout(() => {
+        fetchUserInfo().then((data) => {
+          setUserInfo(data)
+          setReservas(data.reservas)
+          setUpdate(!update)
+        })
+      }, 3000);
     })
     .catch((error) => {
       Swal.fire({

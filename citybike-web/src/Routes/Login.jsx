@@ -36,7 +36,7 @@ export const LoginPage = () => {
     try{
       const response= await fetch(path, requestOptions)
       if(!response.ok){
-        if (response.status === 50) {
+        if (response.status === 500) {
           Swal.fire({
             title: "Error",
             text: "Usuario o contraseña incorrectos",

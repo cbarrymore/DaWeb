@@ -55,8 +55,6 @@ export const fetchEstaciones = async (page, stationsPerPage) => {
       const errorMessage = await response.text()
       throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
     }
-    //setStations(stations.filter(station => station.id !== id));
-    //handleFiltros();
 };
 
 

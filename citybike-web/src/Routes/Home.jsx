@@ -15,12 +15,6 @@ const HomeRol = ({rol}) => {
         <Button className="boton" variant="primary" as={Link} to="/estaciones">Estaciones</Button>
       </Col>
     </Row>
-    <Row>
-      <Col>
-        <p>Gestiona los usuarios de la aplicación</p>
-        <Button className="boton mb-5" variant="primary" as={Link} to="/usuarios">Usuarios</Button>
-      </Col>
-    </Row>
   </Container>
   )
   else if(rol===userRoles.usuario)

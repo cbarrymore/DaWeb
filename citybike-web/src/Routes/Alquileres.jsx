@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import Gateway from "../configs/constants"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { Button, Col, Container, Modal, Row, Table } from "react-bootstrap"
-import {appCard, buttonStyle, elementTable} from "../utils/ComponentsStyles"
+import {appCard, elementTable} from "../utils/ComponentsStyles"
 import TablaEstaciones from "../components/TablaEstaciones"
 import { fetchEstaciones } from "../apis/AccessEstaciones"
 import { EstacionesPaginada } from "../components/EstacionesPaginadas"
@@ -91,7 +91,7 @@ export const Alquileres = () => {
             <p>No hay alquileres activos</p>
           </Row>
           <Row className="justify-content-center">
-            <Button className="botonGrande boton" style={buttonStyle} onClick={() => navigate("/estaciones")}>
+            <Button className="botonGrande boton"onClick={() => navigate("/estaciones")}>
               Alquilar bicicletas
             </Button>
           </Row>
@@ -133,7 +133,11 @@ export const Alquileres = () => {
 
 const TablaAlquileres = ({ alquileres }) => {
   return (
-    <Table striped bordered hover responsive className="mt-2">
+    <div style={{
+      maxHeight:  '35vh' ,
+      overflowY:  'auto' 
+    }}>
+    <Table striped bordered hover responsive className="mt-2" >
       <thead>
         <tr>
           <th style={elementTable}>Id</th>
@@ -153,5 +157,6 @@ const TablaAlquileres = ({ alquileres }) => {
         ))}
       </tbody>
     </Table>
+    </div>
   )
 }

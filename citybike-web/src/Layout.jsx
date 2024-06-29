@@ -11,7 +11,7 @@ import { useAuth } from "./hooks/useAuth"
 const MainContent = () => {
   const { user, logout, role } = useAuth()
   return (
-    <div className="bg-white flex-fill main-content-div min-vh-100" >
+    <div className="bg-white flex-fill main-content-div d-lg-flex align-self-lg-center align-items-lg-center justify-content-lg-center" >
       <div className="p-2 d-lg-none d-flex text-white bg-success banner">
         <a
           href="#"

@@ -28,12 +28,9 @@ const Sidebar = () => {
       onHide={handleClose}
       backdrop={false}
       className="d-flex flex-column flex-shrink-0 p-4 bg-success text-white "
-      style={{ width: "250px"}}
+      style={{ width: "250px" }}
       responsive="lg"
     >
-      <Offcanvas.Header closeButton>
-        <Offcanvas.Title className="navbar-brand"></Offcanvas.Title>
-      </Offcanvas.Header>
       <div
         id="logo"
         className="d-flex justify-content-center"
@@ -53,15 +50,18 @@ const Sidebar = () => {
       </div>
       <hr />
       <Nav className="flex-column mb-auto mynav" variant="pills">
-        <Nav.Item className="mb-1" id="navitem">
-          <Nav.Link
-            className="text-white"
-            onClick={() => navigate("/estaciones")}
-          >
-            <i className="fa-solid fa-square-parking"></i>
-            Estaciones
-          </Nav.Link>
-        </Nav.Item>
+        {role !==null && (
+            <Nav.Item className="mb-1" id="navitem">
+              <Nav.Link
+                className="text-white"
+                onClick={() => navigate("/estaciones")}
+              >
+                <i className="fa-solid fa-square-parking"></i>
+                Estaciones
+              </Nav.Link>
+            </Nav.Item>
+          )}
+
         {role !== null && role === ur.usuario && (
           <Nav.Item className="mb-1">
             <Nav.Link
@@ -94,7 +94,7 @@ const Sidebar = () => {
               onClick={() => {
                 logout()
                 navigate("/")
-                navigate(0);
+                navigate(0)
               }}
             >
               <i className="fas fa-sign-out-alt pe-2"></i>
@@ -113,7 +113,7 @@ const Sidebar = () => {
           )}
         </Nav.Item>
       </Nav>
-      
+
       <div className="d-flex justify-content-center">
         <span>
           <h6 className="mt-1 mb-0">Usuario: {user}</h6>

@@ -8,47 +8,24 @@ import UserContext from "../contexts/UserContext";
 import { alquilarBicicleta, crearReserva, dejarBicicleta } from "../apis/AccessAlquileres";
 import Swal from "sweetalert2";
 import { Button, Container } from "react-bootstrap";
-import { fetchBicicletas } from "../apis/AccessEstaciones";
+import { fetchBicicletas, fetchEstacion } from "../apis/AccessEstaciones";
 import BiciModel from "../Models/BiciModel";
 import { appCard } from "../utils/ComponentsStyles";
 import LoadingModal from "./LoadingModal";
 
 export async function loader({ params }) {
-  const estacion = await fetchEstacion(params.id)
+  const estacion = await fetchEstacion(params.id).catch((err) => {
+    Swal.fire({
+        title: "Error",
+        text: err.message,
+        icon: "error",
+        confirmButtonText: "Ok",
+        });
+    }
+    )
   return { estacion }
 }
 
-const fetchEstacion = async (id) => {
-  const token = localStorage.getItem("token")
-  const uri = Gateway + `/estaciones/${id}`
-  const myHeaders = new Headers()
-  myHeaders.append("Authorization", "Bearer " + token)
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  }
-  try {
-    const response = await fetch(uri, requestOptions)
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-    const estacion = await response.json()
-    return estacion
-  } catch (err) {
-    if (err.name === "AbortError") {
-      alert(
-        "Fetch aborted by user action (browser stop button, closing tab, etc."
-      )
-    } else if (err.name === "TypeError") {
-      alert("AbortSignal.timeout() method is not supported")
-    } else {
-      // A network error, or some other problem.
-      alert(`Error: type: ${err.name}, message: ${err.message}`)
-    }
-  }
-  return {}
-}
 
 
 
@@ -59,21 +36,20 @@ const Estacion = () => {
     const [totalPages, setTotalPages] = useState(0)
     const [update, setUpdate] = useState(false)
     const [loading, setLoading] = useState(false)
-    const  {token} = useAuth();
     const { estacion} = useLoaderData()
     const idEstacion = estacion.id
     const navigate = useNavigate()
-    const {reservas,setReservas,alquiler,setAlquiler,updateUserContext} = useContext(UserContext)
+    const {setReservas,alquiler,setAlquiler,updateUserContext} = useContext(UserContext)
 
     useEffect(() => {
         console.log("Actualizamos la lista de bicicletas")
-        const result = fetchBicis(idEstacion,currentPage,bicisPerPage)
+        fetchBicis(idEstacion,currentPage,bicisPerPage)
         updateUserContext()
     },[currentPage,bicisPerPage,update])
 
     
 
-    const fetchBicis = async (idEstacion, motivoBaja) => {
+    const fetchBicis = async (idEstacion) => {
         setLoading(true)
         fetchBicicletas(idEstacion,currentPage,bicisPerPage).then((data) => {
             const bicis = data._embedded?.biciDtoList
@@ -100,34 +76,6 @@ const Estacion = () => {
         })).finally(() => setLoading(false))
     }
 
-    const handleDarBajaBici = async (codigoBici,motivo) => {
-        const uri = Gateway +  `/estaciones/${idEstacion}/bicis/${codigoBici}?motivoBaja=${motivo}`;
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer "+token);
-        const requestOptions = {
-            method: "DELETE",
-            headers: myHeaders,
-            redirect: "follow"
-        };
-        try{
-            const response = await fetch(uri, requestOptions);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            fetchBicis(idEstacion)
-        } catch(err){
-            if (err.name === "AbortError") {
-                alert(
-                    "Fetch aborted by user action (browser stop button, closing tab, etc.",
-                );
-            } else if (err.name === "TypeError") {
-                alert("AbortSignal.timeout() method is not supported");
-            } else {
-                // A network error, or some other problem.
-                alert(`Error: type: ${err.name}, message: ${err.message}`);
-            }
-        }
-    }
 
     const handleReservarBici = async (codigoBici) => {
         console.log(codigoBici)

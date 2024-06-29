@@ -1,5 +1,4 @@
 import { useOutlet } from "react-router-dom"
-import { AuthProvider, useAuth } from "../hooks/useAuth"
 import UserContext from "../contexts/UserContext"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { fetchUserInfo } from "../apis/AccessAlquileres"
@@ -14,7 +13,6 @@ export const UserLayout = () => {
     "historialAlquileres",
     []
   )
-  const { user, id, token, role, login, logout } = useAuth()
 
   const updateUserContext = () => {
     fetchUserInfo().then((data) => {
@@ -32,13 +30,11 @@ export const UserLayout = () => {
       let alquilerActivo = data.alquileres.find(
         (alquiler) => alquiler.fin === null || alquiler.fin === ""
       )
-      console.log(alquilerActivo)
       if (alquilerActivo) setAlquiler(alquilerActivo)
       else setAlquiler(null)
       let historialAlquileres = alquileres.filter(
         (alquiler) => alquiler.fin !== null && alquiler.fin !== ""
       )
-      console.log(historialAlquileres)
       setHistorialAlquileres(historialAlquileres)
 
       let reservas = data.reservas.map(
@@ -50,15 +46,12 @@ export const UserLayout = () => {
             reserva.caducidad
           )
       )
-      console.log(reservas)
       if (data.reservas.length > 0) {
         console.log(data.reservas[0])
         setReservas(data.reservas)
       } else {
         setReservas([])
       }
-      console.log(reservas)
-      console.log(alquiler)
     })
   }
 

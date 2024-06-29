@@ -80,27 +80,5 @@ const TablaEstaciones = ({ estaciones, onDelete }) => {
       </Row>
   )
 }
-const test = (id) => {
-  const myHeaders = new Headers()
-  const token = localStorage.getItem("token")
-  myHeaders.append(
-    "Authorization",
-    `Bearer ${token}`
-  )
-
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  }
-
-  fetch(
-    `http://localhost:8070/estaciones/${id}`,
-    requestOptions
-  )
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error))
-}
 
 export default TablaEstaciones

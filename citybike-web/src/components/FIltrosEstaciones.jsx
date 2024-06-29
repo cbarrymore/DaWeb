@@ -1,11 +1,10 @@
-import { Col, Row } from "react-bootstrap"
+import { Col, Container, Row } from "react-bootstrap"
 import { filterHead } from "../utils/ComponentsStyles"
 
 const FiltrosEstaciones = ({setFilterMethods}) => {
     //alignItems: 'center', en la primera
     return (
-        <>
-        <h1>Estaciones</h1>
+        <Container className="mb-5">
         <Row style={filterHead} className="my-3 py-3">
             <Col className = "p-2" style={{  marginRight: '20px'}}>
                 <h2>Filtrar por Nombre</h2>
@@ -20,7 +19,7 @@ const FiltrosEstaciones = ({setFilterMethods}) => {
                 <input type="number" placeholder="Bicis disponibles"  onChange={(e) => setFilterMethods[2](e.target.value)}/>
             </Col>
         </Row>
-        </>
+        </Container>
     )
 
 }

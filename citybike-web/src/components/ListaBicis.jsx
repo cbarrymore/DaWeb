@@ -12,7 +12,7 @@ const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
   if(rol === ur.gestor)
     {
       return (
-        <td style={elementTable}>
+        <td>
         <FormDialog idBici={biciCodigo} idEstacion={idEstacion}/>
         </td>
       )
@@ -22,11 +22,11 @@ const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
       console.log(alquiler)
       console.log(reservas)
       return (
-        <td style={elementTable}>
-          <Button className='mx-1' disabled={reservas.length >0  || alquiler !== null} style={buttonStyle} onClick={() => onReserva(biciCodigo)}>
+        <td>
+          <Button className='mx-1 boton' disabled={reservas.length >0  || alquiler !== null} onClick={() => onReserva(biciCodigo)}>
             {"Reservar"}
           </Button>
-          <Button className='mx-1' disabled={reservas.length >0  || alquiler !== null} style={buttonStyle} onClick={ () => onAlquiler(biciCodigo)}>
+          <Button className='mx-1 boton' disabled={reservas.length >0  || alquiler !== null} onClick={ () => onAlquiler(biciCodigo)}>
             {"Alquilar"}
           </Button>
         </td>
@@ -56,24 +56,24 @@ const ListaBicis = ({ bicis,onReserva,onAlquiler, idEstacion }) => {
           <Table>
             <thead>
               <tr>
-                <th style={headingTable}>Codigo</th>
-                <th style={headingTable}>Modelo</th>
-                <th style={headingTable}>Fecha de Alta</th>
-                <th style={headingTable}>Fecha de Baja</th>
-                <th style={headingTable}>Motivo de Baja</th>
-                <th style={headingTable}>Disponible</th>
-                <th style={headingTable}></th>
+                <th style={elementTable}>Codigo</th>
+                <th style={elementTable}>Modelo</th>
+                <th style={elementTable}>Fecha de Alta</th>
+                <th style={elementTable}>Fecha de Baja</th>
+                <th style={elementTable}>Motivo de Baja</th>
+                <th style={elementTable}>Disponible</th>
+                <th style={elementTable}></th>
               </tr>
             </thead>
             <tbody>
               {bicis.map((bici) => (
                   <tr key={bici.codigo}>
-                  <td style={elementTable} className="align-middle">{bici.codigo}</td>
-                  <td style={elementTable} className="align-middle">{bici.modelo}</td>
-                  <td style={elementTable} className="align-middle">{bici.fechaAlta}</td>
-                  {bici.fechaBaja ? <td style={elementTable} className="align-middle">{bici.fechaBaja}</td> : <td style={elementTable} className="align-middle"> - </td>}
-                  {bici.motivoBaja ? <td style={elementTable} className="align-middle">{bici.motivoBaja}</td> : <td style={elementTable} className="align-middle"> - </td>}
-                  <td style={elementTable} className="align-middle">{bici.disponible ? "Sí" : "No"}</td>
+                  <td className="align-middle">{bici.codigo}</td>
+                  <td className="align-middle">{bici.modelo}</td>
+                  <td className="align-middle">{bici.fechaAlta}</td>
+                  {bici.fechaBaja ? <td className="align-middle">{bici.fechaBaja}</td> : <td className="align-middle"> - </td>}
+                  {bici.motivoBaja ? <td className="align-middle">{bici.motivoBaja}</td> : <td className="align-middle"> - </td>}
+                  <td className="align-middle">{bici.disponible ? "Sí" : "No"}</td>
                     <OpcionesRol rol={localStorage.getItem("role")} onReserva={onReserva} onAlquiler={onAlquiler} biciCodigo={bici.codigo} idEstacion={idEstacion}/>
                     {/* <button onClick={() => onBaja(bici.codigo)}>Dar de baja</button> */}
                 </tr>

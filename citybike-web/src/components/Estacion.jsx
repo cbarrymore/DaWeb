@@ -10,8 +10,7 @@ import Swal from "sweetalert2";
 import { Button, Container } from "react-bootstrap";
 import { fetchBicicletas, fetchEstacion } from "../apis/AccessEstaciones";
 import BiciModel from "../Models/BiciModel";
-import {buttonStyle} from "../utils/ComponentsStyles";
-
+import { appCard } from "../utils/ComponentsStyles";
 import LoadingModal from "./LoadingModal";
 
 export async function loader({ params }) {
@@ -154,21 +153,23 @@ const Estacion = () => {
     }
 
     return (
-    <Container>
-        <h1>Estacion {estacion.nombre}</h1>
+        <Container>
+         <h1>Estacion {estacion.nombre}</h1>
+    <Container className=" p-5" style={appCard}>
+   
         <h2>Bicicletas</h2>
         {alquiler !== null && (
             <>
                 <p>Ya tiene una bicicleta alquilada</p>
-                <Button onClick={() => handleDejarBici()}>Dejar bici</Button> 
+                <Button className="boton" onClick={() => handleDejarBici()}>Dejar bici</Button> 
             </>
         )}
         
         <ListaBicis bicis={bicicletas} onAlquiler={handleAlquilarBici} onReserva={handleReservarBici} idEstacion={idEstacion} />
         <Pagination elementsPerPage={bicisPerPage} totalPages={totalPages} handlePagination={handlePagination} currentPage={currentPage} />
-        <Button style={buttonStyle} onClick={() => navigate("/estaciones")}>Volver</Button>
+        <Button className="boton mt-3" onClick={() => navigate("/estaciones")}>Volver</Button>
         <LoadingModal show={loading} />
-    </Container>
+    </Container></Container>
     )
 }
 export default Estacion

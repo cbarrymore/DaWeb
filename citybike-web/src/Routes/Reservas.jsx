@@ -3,11 +3,12 @@ import { useLocalStorage } from "../hooks/useLocalStorage"
 import { useContext, useEffect, useState } from "react"
 import Gateway from "../configs/constants"
 import Swal from "sweetalert2"
-import {buttonStyle, buttonNegativeStyle} from "../utils/ComponentsStyles"
+import {buttonStyle, buttonNegativeStyle, appCard, elementTable} from "../utils/ComponentsStyles"
 import { useNavigate } from "react-router-dom"
 import UserContext from "../contexts/UserContext"
 import { cancelarReserva, confirmarReserva, fetchUserInfo } from "../apis/AccessAlquileres"
 import LoadingModal from "../components/LoadingModal"
+import "../utils/generalStyles.css"
 
 export const Reservas = () => {
   const [userInfo, setUserInfo] = useLocalStorage("userInfo", null)
@@ -69,26 +70,27 @@ export const Reservas = () => {
   }
 
   return (
-    <Container>
-      <h1>Reservas</h1>
+    <><h1>Reservas</h1>
+    <Container className="d-flex justify-content-center align-items-center p-5 my-5" style={appCard}>
+      
       {reservas.length === 0 ? (
         <Container>
           <Row>
             <p>No hay reservas</p>
           </Row>
-          <Row>
-            <Button onClick={() => navigate("/estaciones")} style={buttonStyle}>Reservar bicicleta</Button>
+          <Row className="justify-content-center">
+            <Button className="botonGrande boton" onClick={() => navigate("/estaciones")} >Reservar bicicleta</Button>
           </Row>
         </Container>
       ) : (
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Id</th>
-              <th>Fecha creación</th>
-              <th>Bicicleta</th>
-              <th>Caducidad</th>
-              <th>Acciones</th> {/* Added column for actions */}
+              <th style={elementTable}>Id</th>
+              <th style={elementTable}>Fecha creación</th>
+              <th style={elementTable}>Bicicleta</th>
+              <th style={elementTable}>Caducidad</th>
+              <th style={elementTable}>Acciones</th> {/* Added column for actions */}
             </tr>
           </thead>
           <tbody>
@@ -100,10 +102,10 @@ export const Reservas = () => {
                 <td>{reserva.caducidad}</td>
                 <td>
                   {/* Added buttons for confirming and canceling reservation */}
-                  <Button className="mx-1" onClick={() => handleConfirmarReserva()} style={buttonStyle}>
+                  <Button className="mx-1 boton" onClick={() => handleConfirmarReserva()}>
                     Confirmar
                   </Button>
-                  <Button className="mx-1" onClick={() => handleCancelarReserva()} style={buttonNegativeStyle}>
+                  <Button className="mx-1 botonCancelar" onClick={() => handleCancelarReserva()}>
                     Cancelar
                   </Button>
                 </td>
@@ -114,5 +116,6 @@ export const Reservas = () => {
       )}
       <LoadingModal show={loading} />
     </Container>
+    </>
   )
 }

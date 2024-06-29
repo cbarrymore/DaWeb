@@ -1,0 +1,47 @@
+@import url(../configs/palette.css);
+
+.formulario{
+    
+    border-radius: 2em !important;
+    width: 30vw !important;
+    
+}
+
+.botonGrande{
+    width: 20vw !important;
+}
+
+.boton{
+    color: black !important;
+    border-color: var(--persian-green) !important;
+    font-weight: bold !important;
+    background-color: white !important;
+    transition: background-color 0.5s !important;
+}
+
+.botonCancelar{
+    color: black !important;
+    border-color: var(--burnt-sienna) !important;
+    font-weight: bold !important;
+    background-color: white !important;
+    transition: background-color 0.5s !important;
+}
+
+.boton:hover{
+    color: black !important;
+    background-color:  var(--persian-green) !important;
+}
+
+.botonCancelar:hover{
+    color: black !important;
+    background-color:  var(--burnt-sienna) !important;
+}
+
+@media (max-width: 1000px){
+    .formulario{
+        width: 300px !important;
+    }
+    .botonGrande{
+        width: 100px !important;
+    }
+}

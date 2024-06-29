@@ -8,6 +8,7 @@ import { fetchEstaciones, deleteEstacion } from "../apis/AccessEstaciones";
 import Swal from "sweetalert2"
 import EstacionModel from "../Models/EstacionModel";
 import { Col, Container, Row } from "react-bootstrap";
+import { appCard, headingTable } from "../utils/ComponentsStyles";
 import LoadingModal from "./LoadingModal";
 
 export const EstacionesPaginada = ({filters}) => {
@@ -105,7 +106,8 @@ export const EstacionesPaginada = ({filters}) => {
     }
 
     return (
-        <Container class="position-relative">
+        <><h1 className="my-3">Estaciones</h1>
+        <Container fluid className=" p-5" style={appCard}>
             {filters ? 
                 <FiltrosEstaciones setFilterMethods={[setFiltroNombre,setFiltroCodigoPostal,setFiltroNumBicicletas]} />
                 : null
@@ -118,6 +120,7 @@ export const EstacionesPaginada = ({filters}) => {
             </Row>
             <LoadingModal loading={loading} />
         </Container>
+        </>
     );
 
 }

@@ -72,15 +72,15 @@ open={open}
 
           return (
             <>
-              <Button variant="primary" style={buttonNegativeStyle} onClick={handleShow}>
+              <Button variant="primary" className="boton" onClick={handleShow}>
                 -
               </Button>
         
               <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header style={dialogHeadStyle} closeButton >
-                  <Modal.Title>Nueva Bici</Modal.Title>
+                  <Modal.Title>Dar bici de baja</Modal.Title>
                 </Modal.Header>
-                <Modal.Body style={dialogBodyStyle}>
+                <Modal.Body>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                       <Form.Label>Motivo de la baja</Form.Label>
@@ -94,10 +94,10 @@ open={open}
                         required
                       />
                     </Form.Group>
-                    <Button className='mx-1' style={buttonStyle} variant="primary" type="submit">
+                    <Button className='mx-1 boton' variant="primary" type="submit">
                         Eliminar
                     </Button>
-                    <Button className='mx-1' style={buttonNegativeStyle} variant="secondary" onClick={handleClose}>
+                    <Button className='mx-1 boton' variant="secondary" onClick={handleClose}>
                         Cancelar
                     </Button>
                   </Form>

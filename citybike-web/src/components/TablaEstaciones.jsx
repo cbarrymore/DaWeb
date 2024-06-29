@@ -42,7 +42,7 @@ const TablaEstaciones = ({ estaciones, onDelete }) => {
   return (
       <Row>
         <Col className="lg">
-          <Table>
+          <Table responsive bordered hover>
             <thead>
               <tr>
                 <th style={elementTable}>Nombre</th>

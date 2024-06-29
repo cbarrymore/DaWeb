@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { userRoles } from "../data/userRoles"
 import { appCard } from "../utils/ComponentsStyles"
 import "../utils/generalStyles.css"
+import { useAuth } from "../hooks/useAuth"
 
 const HomeRol = ({rol}) => {
   if(rol === userRoles.gestor)
@@ -11,7 +12,13 @@ const HomeRol = ({rol}) => {
     <Row className="p-5">
       <Col>
         <p>Gestiona las estaciones de la aplicación</p>
-        <Button className="boton mb-5" variant="primary" as={Link} to="/estaciones">Estaciones</Button>
+        <Button className="boton" variant="primary" as={Link} to="/estaciones">Estaciones</Button>
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <p>Gestiona los usuarios de la aplicación</p>
+        <Button className="boton mb-5" variant="primary" as={Link} to="/usuarios">Usuarios</Button>
       </Col>
     </Row>
   </Container>
@@ -65,10 +72,10 @@ const HomeRol = ({rol}) => {
 }
 
 export const Home = () => {
-  const rol = localStorage.getItem("role")
+  const { user, logout, role } = useAuth()
   return (
     <Container className="mt-5">
-    <Row className="justify-content-center">
+    <Row className="justify-content-center mb-3">
       <Col md={8} className="text-center">
         <h1>Welcome to Citybike</h1>
         <h2>
@@ -79,7 +86,7 @@ export const Home = () => {
         </h3>
       </Col>
     </Row>
-    <HomeRol rol={rol}/>
+    <HomeRol rol={role}/>
   </Container>
   )
 }

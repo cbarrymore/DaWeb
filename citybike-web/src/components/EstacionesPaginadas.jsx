@@ -94,14 +94,19 @@ export const EstacionesPaginada = ({filters}) => {
 
     const handleDelete = (id) => {
         setLoading(true);
-        deleteEstacion(id).catch((err) => Swal.fire({
+        deleteEstacion(id).catch((err) =>{ Swal.fire({
             title: "Error",
             text: "No se ha podido eliminar la estación\n" + err.message,
             icon: "error",
             confirmButtonText: "Ok"
-        })).finally(() => setLoading(false));
-        setStations(stations.filter(station => station.id !== id));
-        handleFiltros();
+        }); setLoading(false)});
+        if(loading)
+        {
+            setLoading(false);
+            setStations(stations.filter(station => station.id !== id));
+            handleFiltros();
+        }
+        
     };
 
     const handlePagination = (pageNumber) => {

@@ -133,7 +133,11 @@ export const Alquileres = () => {
 
 const TablaAlquileres = ({ alquileres }) => {
   return (
-    <Table striped bordered hover responsive className="mt-2">
+    <div style={{
+      maxHeight:  '35vh' ,
+      overflowY:  'auto' 
+    }}>
+    <Table striped bordered hover responsive className="mt-2" >
       <thead>
         <tr>
           <th style={elementTable}>Id</th>
@@ -153,5 +157,6 @@ const TablaAlquileres = ({ alquileres }) => {
         ))}
       </tbody>
     </Table>
+    </div>
   )
 }

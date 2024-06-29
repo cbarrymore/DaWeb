@@ -20,6 +20,7 @@ import { Reservas } from './Routes/Reservas.jsx';
 import { Alquileres } from './Routes/Alquileres.jsx';
 import { UserLayout } from './layouts/UserLayout.jsx';
 import { Registrarse } from './Routes/Registrarse.jsx';
+import Usuarios from './Routes/Usuarios.jsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route element={<AuthLayout/>}>
@@ -32,6 +33,7 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path='estaciones/:id' loader={estacionLoader} element={<RequireAuth><Estacion/></RequireAuth>}/>
         <Route path='estaciones/editar/:id' loader={formularioEstacionLoader} element={<RequireAuth userroles={[ur.gestor]}><FormularioEstacion/></RequireAuth>}/>
         <Route path='estaciones/editar' element={<RequireAuth userroles={[ur.gestor]}><FormularioEstacion/></RequireAuth>}/>
+        <Route path='usuarios' element={<RequireAuth userroles={[ur.gestor]}><Usuarios/></RequireAuth>}/>
         <Route path='login' element={<RedirectIfLogged><LoginPage/></RedirectIfLogged>}/>
         <Route path='registrarse' element={<Registrarse/>}/>
       </Route> 

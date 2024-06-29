@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Table, Button, Container, Row, Col } from "react-bootstrap";
 import { userRoles as ur } from "../data/userRoles"
 import FormularioEstacion from "./FormularioEstacion";
-import { buttonStyle, elementTable, headingTable } from "../utils/ComponentsStyles";
+import { elementTable } from "../utils/ComponentsStyles";
 
 function numColumnas(rol)
 {

@@ -1,5 +1,4 @@
 import { Button, Container } from "react-bootstrap";
-import {buttonStyle} from "../utils/ComponentsStyles";
 
 const Pagination = ({ elementsPerPage,totalPages ,handlePagination,currentPage}) => {
   const paginationNumbers = [];

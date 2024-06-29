@@ -7,7 +7,7 @@ import {  useNavigate } from "react-router-dom"
 import Gateway from '../configs/constants';
 import { darAltaBici } from '../apis/AccessEstaciones';
 import Swal from 'sweetalert2';
-import { buttonNegativeStyle, buttonStyle, dialogBodyStyle, dialogHeadStyle } from '../utils/ComponentsStyles';
+import { dialogHeadStyle } from '../utils/ComponentsStyles';
 
 const CrearBici = async (idEstacion, modelo) => {
     darAltaBici(idEstacion, modelo).then((response) => {

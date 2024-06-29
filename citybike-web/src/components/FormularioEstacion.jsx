@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../hooks/useAuth";
 import { Button, Container, Form } from "react-bootstrap";
 import { crearEstacion, fetchEstacion, modificarEstacion } from "../apis/AccessEstaciones";
-import { appCard, buttonNegativeStyle, buttonStyle} from "../utils/ComponentsStyles";
+import { appCard } from "../utils/ComponentsStyles";
 import "../utils/generalStyles.css"
 import Swal from "sweetalert2";
 

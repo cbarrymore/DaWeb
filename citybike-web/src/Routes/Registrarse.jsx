@@ -6,6 +6,7 @@ import "./Registrarse.css"
 import { appCard } from "../utils/ComponentsStyles";
 import { registrarUsuario } from "../apis/AccessUsuario";
 import LoadingModal from "../components/LoadingModal"
+import Swal from "sweetalert2";
 
 export const Registrarse = () =>{
   const [loading, setLoading] = useState(false)
@@ -43,7 +44,7 @@ export const Registrarse = () =>{
           icon: 'success',
           confirmButtonText: 'Ok'
         });
-        
+        navigate(`/login`);
         })
         .catch((error) => {
           Swal.fire({
@@ -51,13 +52,8 @@ export const Registrarse = () =>{
             title: "Oops...",
             text: "Error al registrarse" + error,
           });
-          setLoading(false);
-        })
-        if(loading)
-        {
-          setLoading(false)
-          navigate(`/login`)
-        }
+        }).finally(setLoading(false));
+
         
     };
     return (

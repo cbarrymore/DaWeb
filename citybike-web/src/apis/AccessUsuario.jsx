@@ -18,21 +18,3 @@ import Gateway from "../configs/constants";
         throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
         }
     }
-    export const getUsuarios = async () => {
-        const token = localStorage.getItem("token")
-        const uri = Gateway + `/usuarios/all`
-        const myHeaders = new Headers()
-        const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow",
-        
-        }
-        const response = await fetch(uri, requestOptions)
-        if(!response.ok){
-        const errorMessage = await response.text()
-        throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
-        }
-        const data = await response.json()
-        return data
-    }

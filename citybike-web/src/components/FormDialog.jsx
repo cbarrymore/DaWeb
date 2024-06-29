@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import Gateway from '../configs/constants';
 import { darBajaBici } from '../apis/AccessEstaciones';
-import { buttonNegativeStyle, buttonStyle, dialogHeadStyle, dialogBodyStyle } from '../utils/ComponentsStyles';
+import { dialogHeadStyle } from '../utils/ComponentsStyles';
 
 
 const BorrarBici = (idEstacion, idBici, motivoBaja) => {

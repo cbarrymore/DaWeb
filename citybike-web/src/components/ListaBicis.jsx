@@ -4,7 +4,7 @@ import { Alert, Button, Col, Container, Row, Table } from "react-bootstrap";
 import NuevaBiciDialog from './NuevaBiciDialog';
 import { useContext} from 'react';
 import UserContext from '../contexts/UserContext';
-import {buttonStyle, elementTable, headingTable} from "../utils/ComponentsStyles"
+import { elementTable} from "../utils/ComponentsStyles"
 
 const OpcionesRol = ({ rol, onReserva, onAlquiler, biciCodigo, idEstacion}) => {
     const {alquiler, reservas} = useContext(UserContext);

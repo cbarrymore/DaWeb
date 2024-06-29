@@ -8,7 +8,7 @@ import { fetchEstaciones, deleteEstacion } from "../apis/AccessEstaciones";
 import Swal from "sweetalert2"
 import EstacionModel from "../Models/EstacionModel";
 import { Col, Container, Row } from "react-bootstrap";
-import { appCard, headingTable } from "../utils/ComponentsStyles";
+import { appCard } from "../utils/ComponentsStyles";
 import LoadingModal from "./LoadingModal";
 
 export const EstacionesPaginada = ({filters}) => {
@@ -91,18 +91,17 @@ export const EstacionesPaginada = ({filters}) => {
 
     const handleDelete = (id) => {
         setLoading(true);
-        deleteEstacion(id).catch((err) =>{ Swal.fire({
+        deleteEstacion(id)
+        .then(() => {
+            setStations(stations.filter(station => station.id !== id));
+            handleFiltros();
+        })
+        .catch((err) =>{ Swal.fire({
             title: "Error",
             text: "No se ha podido eliminar la estación\n" + err.message,
             icon: "error",
             confirmButtonText: "Ok"
-        }); setLoading(false)});
-        if(loading)
-        {
-            setLoading(false);
-            setStations(stations.filter(station => station.id !== id));
-            handleFiltros();
-        }
+        }); }).finally(setLoading(false));
         
     };
 

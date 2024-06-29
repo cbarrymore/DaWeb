@@ -1,23 +1,6 @@
 import palette from "../configs/palette"
 
-export const buttonStyle = {
-    borderColor: palette.persianGreen,
-    color: "black",
-    fontWeight: "bold",
-}
 
-export const buttonNegativeStyle = {
-    backgroundColor: palette.burntSienna,
-    borderColor: palette.burntSienna,
-    color: "black",
-    fontWeight: "bold",
-}
-
-export const headingTable = {
-    backgroundColor: palette.charcoal,
-    color: "white",
-    fontWeight: "bold",
-}
 
 export const elementTable = {
     backgroundColor: palette.charcoal,
@@ -32,9 +15,6 @@ export const filterHead = {
     fontWeight: "bold"
 }
 
-export const dialogBodyStyle = {
-    backgroundColor: palette.sandyBrown
-}
 
 export const dialogHeadStyle = {
     backgroundColor: palette.charcoal,

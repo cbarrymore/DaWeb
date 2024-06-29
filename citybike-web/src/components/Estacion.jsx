@@ -113,7 +113,10 @@ const Estacion = () => {
                 icon: "success",
                 confirmButtonText: "Ok"
             })
-            setUpdate(!update)
+            let bicisFiltradas = bicicletas.filter(bici => bici.codigo !== codigoBici)
+            console.log(bicisFiltradas)
+            setBicicletas(bicisFiltradas);
+            //setUpdate(!update)
             setReservas([])
         }).catch((err) => (
             Swal.fire({
@@ -122,8 +125,8 @@ const Estacion = () => {
             icon: "error",
             confirmButtonText: "Ok"
             })
-        ).finally(() => setLoading(false))
         )
+        ).finally(() => setLoading(false))
     }
 
     const handlePagination = (pageNumber) => {

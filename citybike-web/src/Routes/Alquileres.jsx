@@ -133,7 +133,7 @@ export const Alquileres = () => {
 
 const TablaAlquileres = ({ alquileres }) => {
   return (
-    <Table striped bordered hover responsive className="mt-2">
+    <Table striped bordered hover responsive="sm" className="mt-2">
       <thead>
         <tr>
           <th style={elementTable}>Id</th>

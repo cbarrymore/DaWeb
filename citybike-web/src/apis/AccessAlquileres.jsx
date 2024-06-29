@@ -60,9 +60,16 @@ export const cancelarReserva = async () => {
     headers: myHeaders,
     redirect: "follow"
   };
-  fetch(uri, requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
+  const response = await fetch(uri, requestOptions)
+  if (response.status === 204) {
+    return
+  }
+  if(!response.ok){
+    const errorMessage = await response.text()
+    throw new Error(`HTTP error! status: ${response.status}}\n${errorMessage}`)
+  }
+  const data = await response.json()
+  return data
 }
 
 
